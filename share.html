@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片分享 - GitHub静态网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .share-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .share-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .share-info {
+            margin-bottom: 2rem;
+        }
+        
+        .share-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .share-info p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .share-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .share-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .share-button:hover {
+            background-color: #555;
+        }
+        
+        .back-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>图片分享</h1>
+        <p>查看和分享精彩图片</p>
+    </header>
+    
+    <main>
+        <div class="share-container">
+            <img id="share-image" class="share-image" src="" alt="分享图片">
+            <div class="share-info">
+                <h2 id="share-title">图片标题</h2>
+                <p id="share-description">图片描述</p>
+            </div>
+            <div class="share-actions">
+                <button class="share-button" onclick="copyLink()">复制链接</button>
+                <button class="share-button" onclick="shareToSocial()">分享到社交平台</button>
+            </div>
+            <a href="index.html" class="back-link">返回主页</a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 GitHub静态网页示例</p>
+    </footer>
+    
+    <script>
+        // 从URL参数中获取图片信息
+        function getUrlParams() {
+            const params = {};
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.forEach((value, key) => {
+                params[key] = value;
+            });
+            return params;
+        }
+        
+        // 加载图片信息
+        function loadImageInfo() {
+            const params = getUrlParams();
+            if (params.id && params.title && params.description && params.url) {
+                document.getElementById('share-image').src = params.url;
+                document.getElementById('share-title').textContent = params.title;
+                document.getElementById('share-description').textContent = params.description;
+            }
+        }
+        
+        // 复制链接
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('链接已复制到剪贴板！');
+            }).catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制链接。');
+            });
+        }
+        
+        // 分享到社交平台
+        function shareToSocial() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.getElementById('share-title').textContent);
+            const twitterUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        }
+        
+        // 页面加载时执行
+        window.onload = loadImageInfo;
+    </script>
+</body>
+</html>
