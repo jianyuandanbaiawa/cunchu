@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批量上传文件到GitHub - GitHub静态网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .upload-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .upload-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .upload-button:hover {
+            background-color: #555;
+        }
+        
+        .upload-button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        
+        .status-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .file-list {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .file-list h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .file-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .file-list li {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>批量上传文件到GitHub</h1>
+        <p>将所有项目文件上传到GitHub仓库</p>
+        <nav>
+            <a href="index.html" style="color: #fff; text-decoration: none; margin-right: 1rem; padding: 0.5rem 1rem; background-color: rgba(255,255,255,0.2); border-radius: 4px;">返回主页</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="upload-container">
+            <form id="batch-upload-form">
+                <div class="form-group">
+                    <label for="github-token">GitHub Personal Access Token</label>
+                    <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" value="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" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-username">GitHub用户名</label>
+                    <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" value="jianyuandanbaiawa" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-repo">GitHub仓库名</label>
+                    <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" value="cunchu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-branch">GitHub分支</label>
+                    <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）" value="main">
+                </div>
+                
+                <button type="submit" class="upload-button" id="upload-button">批量上传所有文件</button>
+            </form>
+            
+            <div id="status-message" class="status-message" style="display: none;"></div>
+            
+            <div class="file-list">
+                <h3>待上传的文件</h3>
+                <ul id="file-list">
+                    <li>index.html</li>
+                    <li>styles.css</li>
+                    <li>script.js</li>
+                    <li>share.html</li>
+                    <li>upload.html</li>
+                    <li>upload.js</li>
+                    <li>batch-upload.html</li>
+                </ul>
+            </div>
+            
+            <a href="index.html" class="back-link">返回主页</a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 GitHub静态网页示例</p>
+    </footer>
+    
+    <script>
+        // 待上传的文件列表
+        const filesToUpload = [
+            { name: 'index.html', path: 'index.html' },
+            { name: 'styles.css', path: 'styles.css' },
+            { name: 'script.js', path: 'script.js' },
+            { name: 'share.html', path: 'share.html' },
+            { name: 'upload.html', path: 'upload.html' },
+            { name: 'upload.js', path: 'upload.js' },
+            { name: 'batch-upload.html', path: 'batch-upload.html' }
+        ];
+        
+        // 当DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadForm = document.getElementById('batch-upload-form');
+            const uploadButton = document.getElementById('upload-button');
+            const statusMessage = document.getElementById('status-message');
+            
+            // 监听表单提交事件
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 获取表单数据
+                const githubToken = document.getElementById('github-token').value;
+                const githubUsername = document.getElementById('github-username').value;
+                const githubRepo = document.getElementById('github-repo').value;
+                const githubBranch = document.getElementById('github-branch').value || 'main';
+                
+                // 显示上传状态
+                uploadButton.disabled = true;
+                uploadButton.textContent = '上传中...';
+                showStatus('正在批量上传文件，请稍候...', 'success');
+                
+                // 开始批量上传
+                let uploadedCount = 0;
+                let failedCount = 0;
+                
+                filesToUpload.forEach(file => {
+                    fetch(file.path)
+                        .then(response => response.text())
+                        .then(content => {
+                            // 将内容转换为base64
+                            const base64Content = btoa(unescape(encodeURIComponent(content)));
+                            return uploadToGitHub(githubToken, githubUsername, githubRepo, githubBranch, file.name, base64Content);
+                        })
+                        .then(() => {
+                            uploadedCount++;
+                            updateStatus(uploadedCount, failedCount);
+                        })
+                        .catch(error => {
+                            failedCount++;
+                            updateStatus(uploadedCount, failedCount);
+                            console.error(`上传${file.name}失败:`, error);
+                        });
+                });
+                
+                // 更新上传状态
+                function updateStatus(uploaded, failed) {
+                    const total = filesToUpload.length;
+                    const completed = uploaded + failed;
+                    
+                    if (completed < total) {
+                        showStatus(`正在上传文件 ${completed}/${total}...`, 'success');
+                    } else {
+                        if (failed === 0) {
+                            showStatus(`所有 ${total} 个文件上传成功！`, 'success');
+                        } else {
+                            showStatus(`上传完成：成功 ${uploaded} 个，失败 ${failed} 个`, 'error');
+                        }
+                        uploadButton.disabled = false;
+                        uploadButton.textContent = '批量上传所有文件';
+                    }
+                }
+            });
+            
+            // 上传文件到GitHub
+            function uploadToGitHub(token, username, repo, branch, filename, base64Content) {
+                const url = `https://api.github.com/repos/${username}/${repo}/contents/${filename}`;
+                
+                // 构建请求体
+                const requestBody = {
+                    message: `Upload file: ${filename}`,
+                    content: base64Content,
+                    branch: branch
+                };
+                
+                // 发送请求
+                return fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.message || '上传失败');
+                        });
+                    }
+                    return response.json();
+                });
+            }
+            
+            // 显示状态消息
+            function showStatus(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = `status-message status-${type}`;
+                statusMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
