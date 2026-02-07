@@ -1,48 +1,50 @@
-// 图片数据
-const images = [
-    {
-        id: 1,
-        title: "风景图片1",
-        description: "美丽的自然风光",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=beautiful%20natural%20landscape%20with%20mountains%20and%20lake&image_size=square"
-    },
-    {
-        id: 2,
-        title: "风景图片2",
-        description: "壮观的山脉景色",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=majestic%20mountain%20range%20with%20snow%20capped%20peaks&image_size=square"
-    },
-    {
-        id: 3,
-        title: "风景图片3",
-        description: "宁静的森林小径",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=peaceful%20forest%20path%20with%20sunlight%20filtering%20through%20trees&image_size=square"
-    },
-    {
-        id: 4,
-        title: "风景图片4",
-        description: "美丽的海滩日落",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=beautiful%20beach%20sunset%20with%20orange%20sky&image_size=square"
-    },
-    {
-        id: 5,
-        title: "风景图片5",
-        description: "宏伟的瀑布",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=magnificent%20waterfall%20in%20lush%20green%20forest&image_size=square"
-    },
-    {
-        id: 6,
-        title: "风景图片6",
-        description: "城市天际线",
-        url: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20city%20skyline%20at%20night%20with%20lights&image_size=square"
-    }
-];
+// GitHub仓库信息
+const githubRepoInfo = {
+    owner: 'jianyuandanbaiawa',
+    repo: 'cunchu',
+    branch: 'main'
+};
 
 // 当DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
+    // 检查登录状态
+    checkLoginStatus();
     // 渲染图片画廊
     renderGallery();
+    // 渲染文本内容
+    renderTexts();
 });
+
+// 检查登录状态
+function checkLoginStatus() {
+    const loginButton = document.getElementById('login-button');
+    if (loginButton) {
+        const isLoggedIn = localStorage.getItem('githubLoggedIn') === 'true';
+        if (isLoggedIn) {
+            // 已登录状态
+            loginButton.textContent = '已登录';
+            loginButton.href = '#';
+            loginButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('确定要登出吗？')) {
+                    logout();
+                }
+            });
+        } else {
+            // 未登录状态
+            loginButton.textContent = '登录';
+            loginButton.href = 'login.html';
+        }
+    }
+}
+
+// 登出功能
+function logout() {
+    localStorage.removeItem('githubLoggedIn');
+    localStorage.removeItem('loginTime');
+    // 刷新页面
+    window.location.reload();
+}
 
 // 渲染图片画廊
 function renderGallery() {
@@ -51,40 +53,273 @@ function renderGallery() {
     // 清空容器
     galleryContainer.innerHTML = '';
     
-    // 遍历图片数据，创建图片项
-        images.forEach(image => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        
-        // 创建图片元素
-        const img = document.createElement('img');
-        img.src = image.url;
-        img.alt = image.title;
-        
-        // 创建标题和描述
-        const caption = document.createElement('div');
-        caption.className = 'caption';
-        
-        const h3 = document.createElement('h3');
-        h3.textContent = image.title;
-        
-        const p = document.createElement('p');
-        p.textContent = image.description;
-        
-        // 组装元素
-        caption.appendChild(h3);
-        caption.appendChild(p);
-        
-        galleryItem.appendChild(img);
-        galleryItem.appendChild(caption);
-        
-        // 添加点击事件，跳转到分享页
-        galleryItem.addEventListener('click', function() {
-            const url = `share.html?id=${image.id}&title=${encodeURIComponent(image.title)}&description=${encodeURIComponent(image.description)}&url=${encodeURIComponent(image.url)}`;
-            window.location.href = url;
+    // 显示加载状态
+    galleryContainer.innerHTML = '<div style="text-align: center; padding: 2rem;">加载图片中，请稍候...</div>';
+    
+    // 从GitHub API获取图片
+    fetchImagesFromGitHub()
+        .then(images => {
+            // 清空容器
+            galleryContainer.innerHTML = '';
+            
+            // 遍历图片数据，创建图片项
+            images.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                
+                // 创建图片元素
+                const img = document.createElement('img');
+                img.src = image.download_url;
+                img.alt = image.name;
+                
+                // 创建标题和描述
+                const caption = document.createElement('div');
+                caption.className = 'caption';
+                
+                const h3 = document.createElement('h3');
+                h3.textContent = image.name;
+                
+                const p = document.createElement('p');
+                p.textContent = `上传者: ${image.uploaderName}`;
+                
+                // 组装元素
+                caption.appendChild(h3);
+                caption.appendChild(p);
+                
+                galleryItem.appendChild(img);
+                galleryItem.appendChild(caption);
+                
+                // 添加点击事件，跳转到分享页
+                galleryItem.addEventListener('click', function() {
+                    const url = `share.html?id=${index + 1}&title=${encodeURIComponent(image.name)}&description=${encodeURIComponent('上传的图片')}&uploader=${encodeURIComponent(image.uploaderName)}&url=${encodeURIComponent(image.download_url)}`;
+                    window.location.href = url;
+                });
+                
+                // 添加到容器
+                galleryContainer.appendChild(galleryItem);
+            });
+        })
+        .catch(error => {
+            console.error('获取图片失败:', error);
+            galleryContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: red;">加载图片失败，请刷新页面重试</div>';
         });
-        
-        // 添加到容器
-        galleryContainer.appendChild(galleryItem);
-    });
+}
+
+// 从GitHub API获取图片
+function fetchImagesFromGitHub() {
+    const { owner, repo, branch } = githubRepoInfo;
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/images?ref=${branch}`;
+    
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('获取图片列表失败');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 分离图片文件和元数据文件
+            const imageFiles = [];
+            const metaFiles = {};
+            
+            data.forEach(item => {
+                if (item.type === 'file') {
+                    if (/\.(jpg|jpeg|png|gif|webp)$/i.test(item.name)) {
+                        // 图片文件
+                        imageFiles.push(item);
+                    } else if (item.name.endsWith('.json')) {
+                        // 元数据文件
+                        const imageName = item.name.replace('.json', '');
+                        metaFiles[imageName] = item;
+                    }
+                }
+            });
+            
+            // 为每个图片添加上传者信息
+            return Promise.all(imageFiles.map(image => {
+                const imageName = image.name.replace(/\.[^/.]+$/, '');
+                const metaFile = metaFiles[imageName];
+                
+                if (metaFile) {
+                    // 有对应的元数据文件，获取上传者信息
+                    return fetch(metaFile.download_url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('获取元数据失败');
+                            }
+                            return response.json();
+                        })
+                        .then(metaData => {
+                            return {
+                                ...image,
+                                uploaderName: metaData.uploader || '未知上传者'
+                            };
+                        })
+                        .catch(error => {
+                            console.error(`获取${image.name}的元数据失败:`, error);
+                            return {
+                                ...image,
+                                uploaderName: '未知上传者'
+                            };
+                        });
+                } else {
+                    // 没有对应的元数据文件
+                    return {
+                        ...image,
+                        uploaderName: '未知上传者'
+                    };
+                }
+            }));
+        });
+}
+
+// 渲染文本内容
+function renderTexts() {
+    const textsContainer = document.querySelector('.texts-container');
+    
+    // 清空容器
+    textsContainer.innerHTML = '';
+    
+    // 显示加载状态
+    textsContainer.innerHTML = '<div style="text-align: center; padding: 2rem;">加载文本中，请稍候...</div>';
+    
+    // 从GitHub API获取文本
+    fetchTextsFromGitHub()
+        .then(texts => {
+            // 清空容器
+            textsContainer.innerHTML = '';
+            
+            // 遍历文本数据，创建文本项
+            texts.forEach((text, index) => {
+                const textItem = document.createElement('div');
+                textItem.className = 'text-item';
+                
+                // 创建文本头部
+                const textHeader = document.createElement('div');
+                textHeader.className = 'text-header';
+                
+                const h3 = document.createElement('h3');
+                h3.textContent = text.title || text.name;
+                
+                const p = document.createElement('p');
+                p.textContent = `上传者: ${text.uploaderName}`;
+                
+                // 创建文本内容
+                const textContent = document.createElement('div');
+                textContent.className = 'text-content';
+                textContent.textContent = text.content.substring(0, 200) + (text.content.length > 200 ? '...' : '');
+                
+                // 创建文本底部
+                const textFooter = document.createElement('div');
+                textFooter.className = 'text-footer';
+                
+                const a = document.createElement('a');
+                a.href = text.download_url;
+                a.target = '_blank';
+                a.textContent = '查看全文';
+                
+                // 组装元素
+                textHeader.appendChild(h3);
+                textHeader.appendChild(p);
+                textFooter.appendChild(a);
+                
+                textItem.appendChild(textHeader);
+                textItem.appendChild(textContent);
+                textItem.appendChild(textFooter);
+                
+                // 添加到容器
+                textsContainer.appendChild(textItem);
+            });
+        })
+        .catch(error => {
+            console.error('获取文本失败:', error);
+            textsContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: red;">加载文本失败，请刷新页面重试</div>';
+        });
+}
+
+// 从GitHub API获取文本
+function fetchTextsFromGitHub() {
+    const { owner, repo, branch } = githubRepoInfo;
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/texts?ref=${branch}`;
+    
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('获取文本列表失败');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 分离文本文件和元数据文件
+            const textFiles = [];
+            const metaFiles = {};
+            
+            data.forEach(item => {
+                if (item.type === 'file') {
+                    if (item.name.endsWith('.txt')) {
+                        // 文本文件
+                        textFiles.push(item);
+                    } else if (item.name.endsWith('.json')) {
+                        // 元数据文件
+                        const textName = item.name.replace('.json', '');
+                        metaFiles[textName] = item;
+                    }
+                }
+            });
+            
+            // 为每个文本添加上传者信息和内容
+            return Promise.all(textFiles.map(text => {
+                const textName = text.name.replace('.txt', '');
+                const metaFile = metaFiles[textName];
+                
+                // 获取文本内容
+                return fetch(text.download_url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('获取文本内容失败');
+                        }
+                        return response.text();
+                    })
+                    .then(content => {
+                        // 构建文本对象
+                        const textObj = {
+                            ...text,
+                            content: content,
+                            uploaderName: '未知上传者',
+                            title: text.name.replace('.txt', '')
+                        };
+                        
+                        // 如果有对应的元数据文件，获取上传者信息
+                        if (metaFile) {
+                            return fetch(metaFile.download_url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('获取元数据失败');
+                                    }
+                                    return response.json();
+                                })
+                                .then(metaData => {
+                                    textObj.uploaderName = metaData.uploader || '未知上传者';
+                                    textObj.title = metaData.title || textObj.title;
+                                    return textObj;
+                                })
+                                .catch(error => {
+                                    console.error(`获取${text.name}的元数据失败:`, error);
+                                    return textObj;
+                                });
+                        } else {
+                            return textObj;
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`获取${text.name}的内容失败:`, error);
+                        return {
+                            ...text,
+                            content: '获取内容失败',
+                            uploaderName: '未知上传者',
+                            title: text.name.replace('.txt', '')
+                        };
+                    });
+            }));
+        });
 }

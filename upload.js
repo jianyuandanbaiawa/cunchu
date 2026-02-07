@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const githubRepo = document.getElementById('github-repo').value;
         const githubBranch = document.getElementById('github-branch').value || 'main';
         const imageFile = document.getElementById('image-file').files[0];
+        const uploaderName = document.getElementById('uploader-name').value;
         
         // 显示上传状态
         uploadButton.disabled = true;
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const reader = new FileReader();
         reader.onload = function(e) {
             const base64Image = e.target.result.split(',')[1]; // 移除data URL前缀
-            uploadToGitHub(githubToken, githubUsername, githubRepo, githubBranch, imageFile.name, base64Image);
+            uploadToGitHub(githubToken, githubUsername, githubRepo, githubBranch, imageFile.name, base64Image, uploaderName);
         };
         reader.onerror = function() {
             showStatus('读取图片文件失败，请重试。', 'error');
@@ -52,44 +53,84 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 上传图片到GitHub
-    function uploadToGitHub(token, username, repo, branch, filename, base64Content) {
-        const path = `images/${filename}`;
-        const url = `https://api.github.com/repos/${username}/${repo}/contents/${path}`;
+    function uploadToGitHub(token, username, repo, branch, filename, base64Content, uploaderName) {
+        const imagePath = `images/${filename}`;
+        const metaPath = `images/${filename.replace(/\.[^/.]+$/, '')}.json`;
+        const imageUrl = `https://api.github.com/repos/${username}/${repo}/contents/${imagePath}`;
+        const metaUrl = `https://api.github.com/repos/${username}/${repo}/contents/${metaPath}`;
         
-        // 构建请求体
-        const requestBody = {
-            message: `Upload image: ${filename}`,
+        // 构建提交信息，包含上传者名字
+        let commitMessage = `Upload image: ${filename}`;
+        if (uploaderName) {
+            commitMessage += ` by ${uploaderName}`;
+        }
+        
+        // 构建图片请求体
+        const imageRequestBody = {
+            message: commitMessage,
             content: base64Content,
             branch: branch
         };
         
-        // 发送请求
-        fetch(url, {
+        // 构建元数据请求体
+        const metaData = {
+            uploader: uploaderName || '未知用户',
+            filename: filename,
+            uploadedAt: new Date().toISOString()
+        };
+        const metaBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metaData, null, 2))));
+        const metaRequestBody = {
+            message: `Add metadata for ${filename}`,
+            content: metaBase64,
+            branch: branch
+        };
+        
+        // 先上传图片
+        fetch(imageUrl, {
             method: 'PUT',
             headers: {
                 'Authorization': `token ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify(imageRequestBody)
         })
         .then(response => {
             if (!response.ok) {
                 return response.json().then(error => {
-                    throw new Error(error.message || '上传失败');
+                    throw new Error(error.message || '上传图片失败');
                 });
             }
             return response.json();
         })
-        .then(data => {
+        .then(imageData => {
+            // 再上传元数据
+            return fetch(metaUrl, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(metaRequestBody)
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(error.message || '上传元数据失败');
+                });
+            }
+            return response.json();
+        })
+        .then(metaData => {
             // 计算GitHub Pages URL
-            const githubPagesUrl = `https://${username}.github.io/${repo}/${path}`;
+            const githubPagesUrl = `https://${username}.github.io/${repo}/images/${filename}`;
             
             // 显示上传成功状态
             showStatus('图片上传成功！', 'success');
             
             // 显示预览和URL
             previewContainer.style.display = 'block';
-            previewImage.src = data.content.download_url;
+            previewImage.src = githubPagesUrl;
             previewUrl.innerHTML = `图片URL: <a href="${githubPagesUrl}" target="_blank">${githubPagesUrl}</a>`;
             
             // 重置上传按钮

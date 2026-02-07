@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传文本到GitHub - GitHub静态网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .upload-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 200px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .upload-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .upload-button:hover {
+            background-color: #555;
+        }
+        
+        .upload-button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        
+        .status-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .preview-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .preview-container h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .preview-content {
+            padding: 1rem;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>上传文本到GitHub</h1>
+        <p>支持emoji、颜文字和多种语言</p>
+        <nav>
+            <a href="index.html" style="color: #fff; text-decoration: none; margin-right: 1rem; padding: 0.5rem 1rem; background-color: rgba(255,255,255,0.2); border-radius: 4px;">返回主页</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="upload-container">
+            <form id="text-upload-form">
+                <div class="form-group">
+                    <label for="github-token">GitHub Personal Access Token</label>
+                    <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" value="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" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-username">GitHub用户名</label>
+                    <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" value="jianyuandanbaiawa" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-repo">GitHub仓库名</label>
+                    <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" value="cunchu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="github-branch">GitHub分支</label>
+                    <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）" value="main">
+                </div>
+                
+                <div class="form-group">
+                    <label for="text-title">文本标题</label>
+                    <input type="text" id="text-title" name="text-title" placeholder="请输入文本标题" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="text-content">文本内容</label>
+                    <textarea id="text-content" name="text-content" placeholder="请输入文本内容，支持emoji、颜文字和多种语言"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="text-language">语言</label>
+                    <select id="text-language" name="text-language">
+                        <option value="zh-CN">中文</option>
+                        <option value="en-US">English</option>
+                        <option value="ja-JP">日本語</option>
+                        <option value="ko-KR">한국어</option>
+                        <option value="es-ES">Español</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="uploader-name">上传者名字</label>
+                    <input type="text" id="uploader-name" name="uploader-name" placeholder="请输入您的名字（可选）">
+                </div>
+                
+                <button type="submit" class="upload-button" id="upload-button">上传文本</button>
+            </form>
+            
+            <div id="status-message" class="status-message" style="display: none;"></div>
+            
+            <div class="preview-container" id="preview-container" style="display: none;">
+                <h3>文本预览</h3>
+                <div id="preview-content" class="preview-content"></div>
+                <p id="preview-url" style="margin-top: 1rem;"></p>
+            </div>
+            
+            <a href="index.html" class="back-link">返回主页</a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 GitHub静态网页示例</p>
+    </footer>
+    
+    <script>
+        // 当DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadForm = document.getElementById('text-upload-form');
+            const uploadButton = document.getElementById('upload-button');
+            const statusMessage = document.getElementById('status-message');
+            const previewContainer = document.getElementById('preview-container');
+            const previewContent = document.getElementById('preview-content');
+            const previewUrl = document.getElementById('preview-url');
+            
+            // 监听表单提交事件
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 获取表单数据
+                const githubToken = document.getElementById('github-token').value;
+                const githubUsername = document.getElementById('github-username').value;
+                const githubRepo = document.getElementById('github-repo').value;
+                const githubBranch = document.getElementById('github-branch').value || 'main';
+                const textTitle = document.getElementById('text-title').value;
+                const textContent = document.getElementById('text-content').value;
+                const textLanguage = document.getElementById('text-language').value;
+                const uploaderName = document.getElementById('uploader-name').value;
+                
+                // 显示上传状态
+                uploadButton.disabled = true;
+                uploadButton.textContent = '上传中...';
+                showStatus('正在上传文本，请稍候...', 'success');
+                
+                // 生成文件名
+                const fileName = `${textTitle.replace(/\s+/g, '-').toLowerCase()}.txt`;
+                
+                // 上传文本到GitHub
+                uploadTextToGitHub(
+                    githubToken, 
+                    githubUsername, 
+                    githubRepo, 
+                    githubBranch, 
+                    fileName, 
+                    textContent, 
+                    textLanguage, 
+                    uploaderName
+                );
+            });
+            
+            // 上传文本到GitHub
+            function uploadTextToGitHub(token, username, repo, branch, filename, content, language, uploaderName) {
+                const textPath = `texts/${filename}`;
+                const metaPath = `texts/${filename.replace('.txt', '')}.json`;
+                const textUrl = `https://api.github.com/repos/${username}/${repo}/contents/${textPath}`;
+                const metaUrl = `https://api.github.com/repos/${username}/${repo}/contents/${metaPath}`;
+                
+                // 构建提交信息
+                let commitMessage = `Upload text: ${filename}`;
+                if (uploaderName) {
+                    commitMessage += ` by ${uploaderName}`;
+                }
+                
+                // 构建文本请求体
+                const textBase64 = btoa(unescape(encodeURIComponent(content)));
+                const textRequestBody = {
+                    message: commitMessage,
+                    content: textBase64,
+                    branch: branch
+                };
+                
+                // 构建元数据请求体
+                const metaData = {
+                    uploader: uploaderName || '未知用户',
+                    title: filename.replace('.txt', ''),
+                    language: language,
+                    uploadedAt: new Date().toISOString()
+                };
+                const metaBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metaData, null, 2))));
+                const metaRequestBody = {
+                    message: `Add metadata for ${filename}`,
+                    content: metaBase64,
+                    branch: branch
+                };
+                
+                // 先上传文本
+                fetch(textUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(textRequestBody)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.message || '上传文本失败');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(textData => {
+                    // 再上传元数据
+                    return fetch(metaUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(metaRequestBody)
+                    });
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.message || '上传元数据失败');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(metaData => {
+                    // 计算GitHub Pages URL
+                    const githubPagesUrl = `https://${username}.github.io/${repo}/texts/${filename}`;
+                    
+                    // 显示上传成功状态
+                    showStatus('文本上传成功！', 'success');
+                    
+                    // 显示预览和URL
+                    previewContainer.style.display = 'block';
+                    previewContent.textContent = content;
+                    previewUrl.innerHTML = `文本URL: <a href="${githubPagesUrl}" target="_blank">${githubPagesUrl}</a>`;
+                    
+                    // 重置上传按钮
+                    uploadButton.disabled = false;
+                    uploadButton.textContent = '上传文本';
+                })
+                .catch(error => {
+                    showStatus(`上传失败: ${error.message}`, 'error');
+                    uploadButton.disabled = false;
+                    uploadButton.textContent = '上传文本';
+                });
+            }
+            
+            // 显示状态消息
+            function showStatus(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = `status-message status-${type}`;
+                statusMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

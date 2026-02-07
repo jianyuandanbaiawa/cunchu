@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录回调 - GitHub静态网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .callback-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .callback-container h1 {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .callback-container p {
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .redirect-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .redirect-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GitHub静态网页</h1>
+        <p>一个简单的GitHub静态网页示例</p>
+    </header>
+    
+    <main>
+        <div class="callback-container">
+            <h1>登录处理中...</h1>
+            <p>正在处理您的登录请求，请稍候...</p>
+            
+            <div id="message"></div>
+            
+            <a href="index.html" class="redirect-button" id="redirect-button" style="display: none;">
+                返回主页
+            </a>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 GitHub静态网页示例</p>
+    </footer>
+    
+    <script>
+        // 获取URL中的code参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        const messageElement = document.getElementById('message');
+        const redirectButton = document.getElementById('redirect-button');
+        
+        if (code) {
+            // 模拟登录成功（实际项目中需要调用后端API交换token）
+            messageElement.innerHTML = '<p class="success-message">登录成功！</p>';
+            
+            // 存储登录状态到localStorage
+            localStorage.setItem('githubLoggedIn', 'true');
+            localStorage.setItem('loginTime', new Date().toISOString());
+            
+            // 显示返回按钮
+            redirectButton.style.display = 'inline-block';
+            
+            // 3秒后自动跳转到主页
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        } else if (error) {
+            // 登录失败
+            messageElement.innerHTML = '<p class="error-message">登录失败：' + error + '</p>';
+            redirectButton.style.display = 'inline-block';
+        } else {
+            // 无code参数
+            messageElement.innerHTML = '<p class="error-message">登录失败：未获取到授权码</p>';
+            redirectButton.style.display = 'inline-block';
+        }
+    </script>
+</body>
+</html>

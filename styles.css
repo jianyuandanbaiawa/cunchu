@@ -158,6 +158,85 @@ footer p {
     opacity: 0.9;
 }
 
+/* 文本内容样式 */
+.texts {
+    margin-bottom: 3rem;
+}
+
+.texts h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+.texts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.text-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.text-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.text-item .text-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.text-item .text-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.text-item .text-header p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.text-item .text-content {
+    padding: 1rem;
+    max-height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.text-item .text-footer {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.text-item .text-footer a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.text-item .text-footer a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     header {
@@ -173,11 +252,13 @@ footer p {
     }
     
     .gallery h2,
-    .content h2 {
+    .content h2,
+    .texts h2 {
         font-size: 1.5rem;
     }
     
-    .gallery-container {
+    .gallery-container,
+    .texts-container {
         grid-template-columns: 1fr;
     }
 }

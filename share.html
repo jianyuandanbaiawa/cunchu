@@ -87,6 +87,7 @@
             <div class="share-info">
                 <h2 id="share-title">图片标题</h2>
                 <p id="share-description">图片描述</p>
+                <p id="share-uploader" style="margin-top: 1rem;"></p>
             </div>
             <div class="share-actions">
                 <button class="share-button" onclick="copyLink()">复制链接</button>
@@ -118,6 +119,13 @@
                 document.getElementById('share-image').src = params.url;
                 document.getElementById('share-title').textContent = params.title;
                 document.getElementById('share-description').textContent = params.description;
+                
+                // 显示上传者信息
+                if (params.uploader) {
+                    document.getElementById('share-uploader').textContent = `上传者: ${params.uploader}`;
+                } else {
+                    document.getElementById('share-uploader').textContent = '上传者: 未知';
+                }
             }
         }
         
