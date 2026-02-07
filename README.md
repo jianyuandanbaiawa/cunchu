@@ -24,3 +24,4 @@
 因为文本与图片被统一分配在images与text中，文件可自由下载，无限制。
 分享链接...只有分享，没有下载功能，so，自己去仓库里找。
 
+网页:https://jianyuandanbaiawa.github.io/cunchu/
