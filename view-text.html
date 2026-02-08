@@ -110,7 +110,7 @@
             </div>
             
             <div class="text-actions">
-                <a href="#" id="download-button" class="action-button">下载文本</a>
+                <button id="download-button" class="action-button">下载文本</button>
             </div>
             
             <a href="index.html" class="back-link">返回主页</a>
@@ -152,8 +152,9 @@
                         
                         // 设置下载按钮
                         const downloadButton = document.getElementById('download-button');
-                        downloadButton.href = params.url;
-                        downloadButton.download = params.title || 'text.txt';
+                        downloadButton.addEventListener('click', function() {
+                            downloadText(content, params.title || 'text.txt');
+                        });
                     })
                     .catch(error => {
                         console.error('加载文本内容失败:', error);
@@ -162,6 +163,25 @@
             } else {
                 document.getElementById('text-content').textContent = '未指定文本文件，请返回主页选择文本。';
             }
+        }
+        
+        // 强制下载文本文件
+        function downloadText(content, filename) {
+            // 创建Blob对象
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            
+            // 创建下载链接
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            
+            // 触发下载
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // 释放URL对象
+            URL.revokeObjectURL(link.href);
         }
         
         // 页面加载时执行

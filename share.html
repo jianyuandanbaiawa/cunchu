@@ -92,7 +92,7 @@
             <div class="share-actions">
                 <button class="share-button" onclick="copyLink()">复制链接</button>
                 <button class="share-button" onclick="shareToSocial()">分享到社交平台</button>
-                <a href="#" id="download-image" class="share-button" style="text-decoration: none; display: inline-block;">下载图片</a>
+                <button class="share-button" id="download-image">下载图片</button>
             </div>
             <a href="index.html" class="back-link">返回主页</a>
         </div>
@@ -130,9 +130,39 @@
                 
                 // 设置下载按钮
                 const downloadButton = document.getElementById('download-image');
-                downloadButton.href = params.url;
-                downloadButton.download = params.title || 'image.jpg';
+                downloadButton.addEventListener('click', function() {
+                    downloadImage(params.url, params.title || 'image.jpg');
+                });
             }
+        }
+        
+        // 强制下载图片
+        function downloadImage(url, filename) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('获取图片失败');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // 创建下载链接
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    
+                    // 触发下载
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // 释放URL对象
+                    URL.revokeObjectURL(link.href);
+                })
+                .catch(error => {
+                    console.error('下载图片失败:', error);
+                    alert('下载图片失败，请重试。');
+                });
         }
         
         // 复制链接

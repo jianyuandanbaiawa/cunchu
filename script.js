@@ -5,6 +5,10 @@ const githubRepoInfo = {
     branch: 'main'
 };
 
+// 存储所有图片和文本数据
+let allImages = [];
+let allTexts = [];
+
 // 当DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
     // 检查登录状态
@@ -13,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     renderGallery();
     // 渲染文本内容
     renderTexts();
+    // 初始化搜索功能
+    initSearch();
 });
 
 // 检查登录状态
@@ -59,6 +65,9 @@ function renderGallery() {
     // 从GitHub API获取图片
     fetchImagesFromGitHub()
         .then(images => {
+            // 存储图片数据
+            allImages = images;
+            
             // 清空容器
             galleryContainer.innerHTML = '';
             
@@ -104,6 +113,148 @@ function renderGallery() {
             galleryContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: red;">加载图片失败，请刷新页面重试</div>';
         });
 }
+
+// 搜索功能
+function initSearch() {
+    const searchInput = document.getElementById('search-input');
+    
+    if (searchInput) {
+        // 回车键搜索
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch(searchInput.value);
+            }
+        });
+        
+        // 输入时实时搜索
+        searchInput.addEventListener('input', function() {
+            performSearch(this.value);
+        });
+    }
+}
+
+// 执行搜索
+function performSearch(keyword) {
+    if (!keyword.trim()) {
+        // 关键词为空，显示所有内容
+        renderGallery();
+        renderTexts();
+        return;
+    }
+    
+    const keywordLower = keyword.toLowerCase();
+    
+    // 过滤图片
+    const filteredImages = allImages.filter(image => {
+        return image.name.toLowerCase().includes(keywordLower) || 
+               image.uploaderName.toLowerCase().includes(keywordLower);
+    });
+    
+    // 过滤文本
+    const filteredTexts = allTexts.filter(text => {
+        return (text.title || text.name).toLowerCase().includes(keywordLower) || 
+               text.uploaderName.toLowerCase().includes(keywordLower) || 
+               text.content.toLowerCase().includes(keywordLower);
+    });
+    
+    // 显示过滤后的图片
+    displayFilteredImages(filteredImages);
+    
+    // 显示过滤后的文本
+    displayFilteredTexts(filteredTexts);
+}
+
+// 显示过滤后的图片
+function displayFilteredImages(images) {
+    const galleryContainer = document.querySelector('.gallery-container');
+    galleryContainer.innerHTML = '';
+    
+    if (images.length === 0) {
+        galleryContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">没有找到匹配的图片</div>';
+        return;
+    }
+    
+    images.forEach((image, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        
+        const img = document.createElement('img');
+        img.src = image.download_url;
+        img.alt = image.name;
+        
+        const caption = document.createElement('div');
+        caption.className = 'caption';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = image.name;
+        
+        const p = document.createElement('p');
+        p.textContent = `上传者: ${image.uploaderName}`;
+        
+        caption.appendChild(h3);
+        caption.appendChild(p);
+        
+        galleryItem.appendChild(img);
+        galleryItem.appendChild(caption);
+        
+        galleryItem.addEventListener('click', function() {
+            const url = `share.html?id=${index + 1}&title=${encodeURIComponent(image.name)}&description=${encodeURIComponent('上传的图片')}&uploader=${encodeURIComponent(image.uploaderName)}&url=${encodeURIComponent(image.download_url)}`;
+            window.location.href = url;
+        });
+        
+        galleryContainer.appendChild(galleryItem);
+    });
+}
+
+// 显示过滤后的文本
+function displayFilteredTexts(texts) {
+    const textsContainer = document.querySelector('.texts-container');
+    textsContainer.innerHTML = '';
+    
+    if (texts.length === 0) {
+        textsContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;">没有找到匹配的文本</div>';
+        return;
+    }
+    
+    texts.forEach((text, index) => {
+        const textItem = document.createElement('div');
+        textItem.className = 'text-item';
+        
+        const textHeader = document.createElement('div');
+        textHeader.className = 'text-header';
+        
+        const h3 = document.createElement('h3');
+        h3.textContent = text.title || text.name;
+        
+        const p = document.createElement('p');
+        p.textContent = `上传者: ${text.uploaderName}`;
+        
+        const textContent = document.createElement('div');
+        textContent.className = 'text-content';
+        textContent.textContent = text.content.substring(0, 200) + (text.content.length > 200 ? '...' : '');
+        
+        const textFooter = document.createElement('div');
+        textFooter.className = 'text-footer';
+        
+        const a = document.createElement('a');
+        a.href = `view-text.html?url=${encodeURIComponent(text.download_url)}&title=${encodeURIComponent(text.title || text.name)}&uploader=${encodeURIComponent(text.uploaderName)}`;
+        a.target = '_blank';
+        a.textContent = '查看全文';
+        
+        textHeader.appendChild(h3);
+        textHeader.appendChild(p);
+        textFooter.appendChild(a);
+        
+        textItem.appendChild(textHeader);
+        textItem.appendChild(textContent);
+        textItem.appendChild(textFooter);
+        
+        textsContainer.appendChild(textItem);
+    });
+}
+
+// 初始化搜索功能
+initSearch();
 
 // 从GitHub API获取图片
 function fetchImagesFromGitHub() {
@@ -186,6 +337,9 @@ function renderTexts() {
     // 从GitHub API获取文本
     fetchTextsFromGitHub()
         .then(texts => {
+            // 存储文本数据
+            allTexts = texts;
+            
             // 清空容器
             textsContainer.innerHTML = '';
             
