@@ -92,13 +92,14 @@
             <div class="share-actions">
                 <button class="share-button" onclick="copyLink()">复制链接</button>
                 <button class="share-button" onclick="shareToSocial()">分享到社交平台</button>
+                <a href="#" id="download-image" class="share-button" style="text-decoration: none; display: inline-block;">下载图片</a>
             </div>
             <a href="index.html" class="back-link">返回主页</a>
         </div>
     </main>
     
     <footer>
-        <p>&copy; 2026 GitHub静态网页示例</p>
+        <p>&copy; 2026 GitHub静态网页存储</p>
     </footer>
     
     <script>
@@ -126,6 +127,11 @@
                 } else {
                     document.getElementById('share-uploader').textContent = '上传者: 未知';
                 }
+                
+                // 设置下载按钮
+                const downloadButton = document.getElementById('download-image');
+                downloadButton.href = params.url;
+                downloadButton.download = params.title || 'image.jpg';
             }
         }
         

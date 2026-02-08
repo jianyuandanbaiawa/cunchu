@@ -214,7 +214,7 @@ function renderTexts() {
                 textFooter.className = 'text-footer';
                 
                 const a = document.createElement('a');
-                a.href = text.download_url;
+                a.href = `view-text.html?url=${encodeURIComponent(text.download_url)}&title=${encodeURIComponent(text.title || text.name)}&uploader=${encodeURIComponent(text.uploaderName)}`;
                 a.target = '_blank';
                 a.textContent = '查看全文';
                 
