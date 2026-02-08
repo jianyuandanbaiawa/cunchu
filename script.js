@@ -9,8 +9,9 @@ const githubRepoInfo = {
 let allImages = [];
 let allTexts = [];
 
-// 存储当前语言
+// 存储当前语言和翻译
 let currentLanguage = localStorage.getItem('selectedLanguage') || 'zh-CN';
+let translations = {};
 
 // 当DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
@@ -18,10 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initLanguage();
     // 检查登录状态
     checkLoginStatus();
-    // 渲染图片画廊
-    renderGallery();
-    // 渲染文本内容
-    renderTexts();
     // 初始化搜索功能
     initSearch();
 });
@@ -59,11 +56,18 @@ function loadLanguage(language) {
             }
             return response.json();
         })
-        .then(translations => {
-            applyTranslations(translations);
+        .then(data => {
+            translations = data;
+            applyTranslations(data);
+            // 语言加载完成后渲染内容
+            renderGallery();
+            renderTexts();
         })
         .catch(error => {
             console.error('语言加载错误:', error);
+            // 即使语言加载失败，也尝试渲染内容
+            renderGallery();
+            renderTexts();
         });
 }
 

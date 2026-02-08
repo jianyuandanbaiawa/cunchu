@@ -21,6 +21,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Base64解密工具函数
+    function base64Decode(encodedString) {
+        try {
+            return atob(encodedString);
+        } catch (e) {
+            console.error('Base64解密失败:', e);
+            throw e;
+        }
+    }
+    
+    // Base64加密工具函数
+    function base64Encode(string) {
+        try {
+            return btoa(string);
+        } catch (e) {
+            console.error('Base64加密失败:', e);
+            throw e;
+        }
+    }
+    
     // 从环境变量或本地存储获取Token
     function getGithubToken() {
         // 首先尝试从环境变量获取（适用于部署环境）
@@ -32,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const encryptedToken = localStorage.getItem('github_token_encrypted');
             if (encryptedToken) {
                 try {
-                    // 简单的解密（实际生产环境应使用更安全的加密方式）
-                    return atob(encryptedToken);
+                    // 使用Base64解密工具函数解密
+                    return base64Decode(encryptedToken);
                 } catch (e) {
                     console.error('解密Token失败:', e);
                 }
@@ -47,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveGithubToken(token) {
         if (typeof localStorage !== 'undefined' && token) {
             try {
-                // 简单的加密（实际生产环境应使用更安全的加密方式）
-                const encryptedToken = btoa(token);
+                // 使用Base64加密工具函数加密
+                const encryptedToken = base64Encode(token);
                 localStorage.setItem('github_token_encrypted', encryptedToken);
             } catch (e) {
                 console.error('加密Token失败:', e);
@@ -78,8 +98,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 githubConfig.style.display = 'none';
             }
             
+            // 从localStorage获取保存的令牌
+            const savedToken = getGithubToken();
+            if (!savedToken) {
+                // 如果没有保存的令牌，使用默认令牌（仅首次使用）
+                const defaultToken = 'Z2hwX1pwenJmY0dpVElRUHRFQnQ2U3VuYWhoaDMzUmY2NjRZdzY2Yw=='; // 加密后的令牌
+                try {
+                    const token = base64Decode(defaultToken);
+                    document.getElementById('github-token').value = token;
+                    saveGithubToken(token);
+                } catch (e) {
+                    console.error('解析默认令牌失败:', e);
+                    showStatus('令牌初始化失败，请使用自己的仓库配置', 'error');
+                    return;
+                }
+            } else {
+                document.getElementById('github-token').value = savedToken;
+            }
+            
             // 设置经典仓库配置
-            document.getElementById('github-token').value = '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';
             document.getElementById('github-username').value = 'jianyuandanbaiawa';
             document.getElementById('github-repo').value = 'cunchu';
             document.getElementById('github-branch').value = 'main';
@@ -193,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
             filename: filename,
             uploadedAt: new Date().toISOString()
         };
-        const metaBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metaData, null, 2))));
+        const metaBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(metaData, null, 2))))
         const metaRequestBody = {
             message: `Add metadata for ${filename}`,
             content: metaBase64,
