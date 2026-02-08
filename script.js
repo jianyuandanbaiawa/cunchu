@@ -9,8 +9,13 @@ const githubRepoInfo = {
 let allImages = [];
 let allTexts = [];
 
+// 存储当前语言
+let currentLanguage = localStorage.getItem('selectedLanguage') || 'zh-CN';
+
 // 当DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
+    // 初始化语言
+    initLanguage();
     // 检查登录状态
     checkLoginStatus();
     // 渲染图片画廊
@@ -20,6 +25,175 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化搜索功能
     initSearch();
 });
+
+// 初始化语言功能
+function initLanguage() {
+    // 设置语言选择器的当前值
+    const languageSelect = document.getElementById('language-select');
+    if (languageSelect) {
+        languageSelect.value = currentLanguage;
+        // 添加语言选择事件监听器
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+    }
+    // 加载并应用当前语言
+    loadLanguage(currentLanguage);
+}
+
+// 切换语言
+function changeLanguage(language) {
+    currentLanguage = language;
+    localStorage.setItem('selectedLanguage', language);
+    loadLanguage(language);
+}
+
+// 加载语言文件并应用翻译
+function loadLanguage(language) {
+    const languageFile = `languages/${language}.json`;
+    
+    fetch(languageFile)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('加载语言文件失败');
+            }
+            return response.json();
+        })
+        .then(translations => {
+            applyTranslations(translations);
+        })
+        .catch(error => {
+            console.error('语言加载错误:', error);
+        });
+}
+
+// 应用翻译到页面元素
+function applyTranslations(translations) {
+    // 更新页面标题
+    if (translations.title) {
+        document.title = translations.title;
+        const pageTitle = document.getElementById('page-title');
+        if (pageTitle) {
+            pageTitle.textContent = translations.title;
+        }
+    }
+    
+    // 更新页面副标题
+    if (translations.subtitle) {
+        const pageSubtitle = document.getElementById('page-subtitle');
+        if (pageSubtitle) {
+            pageSubtitle.textContent = translations.subtitle;
+        }
+    }
+    
+    // 更新导航链接
+    if (translations.nav) {
+        const navUploadImage = document.getElementById('nav-uploadImage');
+        if (navUploadImage && translations.nav.uploadImage) {
+            navUploadImage.textContent = translations.nav.uploadImage;
+        }
+        
+        const navUploadText = document.getElementById('nav-uploadText');
+        if (navUploadText && translations.nav.uploadText) {
+            navUploadText.textContent = translations.nav.uploadText;
+        }
+        
+        const navBatchUpload = document.getElementById('nav-batchUpload');
+        if (navBatchUpload && translations.nav.batchUpload) {
+            navBatchUpload.textContent = translations.nav.batchUpload;
+        }
+        
+        const loginButton = document.getElementById('login-button');
+        if (loginButton && translations.nav.login) {
+            // 只有在未登录状态下才更新登录按钮文本
+            if (loginButton.textContent === '登录' || loginButton.textContent === translations.nav.login) {
+                loginButton.textContent = translations.nav.login;
+            }
+        }
+    }
+    
+    // 更新搜索框占位符
+    if (translations.search) {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.placeholder = translations.search;
+        }
+    }
+    
+    // 更新section标题
+    if (translations.sections) {
+        const sectionGallery = document.getElementById('section-gallery');
+        if (sectionGallery && translations.sections.gallery) {
+            sectionGallery.textContent = translations.sections.gallery;
+        }
+        
+        const sectionTexts = document.getElementById('section-texts');
+        if (sectionTexts && translations.sections.texts) {
+            sectionTexts.textContent = translations.sections.texts;
+        }
+        
+        const sectionContent = document.getElementById('section-content');
+        if (sectionContent && translations.sections.content) {
+            sectionContent.textContent = translations.sections.content;
+        }
+    }
+    
+    // 更新文章内容
+    if (translations.articles) {
+        const articleWelcome = document.getElementById('article-welcome');
+        if (articleWelcome && translations.articles.welcome) {
+            articleWelcome.textContent = translations.articles.welcome;
+        }
+        
+        const articleWelcomeText = document.getElementById('article-welcomeText');
+        if (articleWelcomeText && translations.articles.welcomeText) {
+            articleWelcomeText.textContent = translations.articles.welcomeText;
+        }
+        
+        const articleAbout = document.getElementById('article-about');
+        if (articleAbout && translations.articles.about) {
+            articleAbout.textContent = translations.articles.about;
+        }
+        
+        const articleAboutText = document.getElementById('article-aboutText');
+        if (articleAboutText && translations.articles.aboutText) {
+            articleAboutText.textContent = translations.articles.aboutText;
+        }
+        
+        const articleFeatures = document.getElementById('article-features');
+        if (articleFeatures && translations.articles.features) {
+            articleFeatures.textContent = translations.articles.features;
+        }
+        
+        const articleFeature1 = document.getElementById('article-feature1');
+        if (articleFeature1 && translations.articles.feature1) {
+            articleFeature1.textContent = '- ' + translations.articles.feature1;
+        }
+        
+        const articleFeature2 = document.getElementById('article-feature2');
+        if (articleFeature2 && translations.articles.feature2) {
+            articleFeature2.textContent = '- ' + translations.articles.feature2;
+        }
+        
+        const articleFeature3 = document.getElementById('article-feature3');
+        if (articleFeature3 && translations.articles.feature3) {
+            articleFeature3.textContent = '- ' + translations.articles.feature3;
+        }
+        
+        const articleFeature4 = document.getElementById('article-feature4');
+        if (articleFeature4 && translations.articles.feature4) {
+            articleFeature4.textContent = '- ' + translations.articles.feature4;
+        }
+    }
+    
+    // 更新页脚
+    if (translations.footer) {
+        const pageFooter = document.getElementById('page-footer');
+        if (pageFooter) {
+            pageFooter.textContent = translations.footer;
+        }
+    }
+}
 
 // 检查登录状态
 function checkLoginStatus() {
@@ -89,7 +263,7 @@ function renderGallery() {
                 h3.textContent = image.name;
                 
                 const p = document.createElement('p');
-                p.textContent = `上传者: ${image.uploaderName}`;
+                p.textContent = `${translations.common?.uploader || '上传者'}: ${image.uploaderName}`;
                 
                 // 组装元素
                 caption.appendChild(h3);
@@ -189,7 +363,7 @@ function displayFilteredImages(images) {
         h3.textContent = image.name;
         
         const p = document.createElement('p');
-        p.textContent = `上传者: ${image.uploaderName}`;
+                p.textContent = `${translations.common?.uploader || '上传者'}: ${image.uploaderName}`;
         
         caption.appendChild(h3);
         caption.appendChild(p);
@@ -227,7 +401,7 @@ function displayFilteredTexts(texts) {
         h3.textContent = text.title || text.name;
         
         const p = document.createElement('p');
-        p.textContent = `上传者: ${text.uploaderName}`;
+        p.textContent = `${translations.common?.uploader || '上传者'}: ${text.uploaderName}`;
         
         const textContent = document.createElement('div');
         textContent.className = 'text-content';
@@ -356,7 +530,7 @@ function renderTexts() {
                 h3.textContent = text.title || text.name;
                 
                 const p = document.createElement('p');
-                p.textContent = `上传者: ${text.uploaderName}`;
+        p.textContent = `${translations.common?.uploader || '上传者'}: ${text.uploaderName}`;
                 
                 // 创建文本内容
                 const textContent = document.createElement('div');

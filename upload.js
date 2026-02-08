@@ -21,17 +21,132 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // 从环境变量或本地存储获取Token
+    function getGithubToken() {
+        // 首先尝试从环境变量获取（适用于部署环境）
+        if (typeof process !== 'undefined' && process.env && process.env.GITHUB_TOKEN) {
+            return process.env.GITHUB_TOKEN;
+        }
+        // 然后尝试从localStorage获取（适用于浏览器环境，已加密）
+        if (typeof localStorage !== 'undefined') {
+            const encryptedToken = localStorage.getItem('github_token_encrypted');
+            if (encryptedToken) {
+                try {
+                    // 简单的解密（实际生产环境应使用更安全的加密方式）
+                    return atob(encryptedToken);
+                } catch (e) {
+                    console.error('解密Token失败:', e);
+                }
+            }
+        }
+        // 最后从表单获取
+        return document.getElementById('github-token').value;
+    }
+    
+    // 保存Token到本地存储（加密）
+    function saveGithubToken(token) {
+        if (typeof localStorage !== 'undefined' && token) {
+            try {
+                // 简单的加密（实际生产环境应使用更安全的加密方式）
+                const encryptedToken = btoa(token);
+                localStorage.setItem('github_token_encrypted', encryptedToken);
+            } catch (e) {
+                console.error('加密Token失败:', e);
+            }
+        }
+    }
+    
+    // 监听经典仓库按钮点击事件
+    const classicRepoBtn = document.getElementById('classic-repo-btn');
+    const customRepoBtn = document.getElementById('custom-repo-btn');
+    
+    // 确保按钮存在
+    if (classicRepoBtn && customRepoBtn) {
+        // 为经典仓库按钮添加点击事件
+        classicRepoBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 切换按钮样式
+            classicRepoBtn.classList.remove('btn-secondary');
+            classicRepoBtn.classList.add('btn-primary');
+            customRepoBtn.classList.remove('btn-primary');
+            customRepoBtn.classList.add('btn-secondary');
+            
+            // 隐藏GitHub配置区域
+            const githubConfig = document.getElementById('github-config');
+            if (githubConfig) {
+                githubConfig.style.display = 'none';
+            }
+            
+            // 设置经典仓库配置
+            document.getElementById('github-token').value = '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';
+            document.getElementById('github-username').value = 'jianyuandanbaiawa';
+            document.getElementById('github-repo').value = 'cunchu';
+            document.getElementById('github-branch').value = 'main';
+            
+            // 检查是否选择了图片
+            const imageFile = document.getElementById('image-file').files[0];
+            if (!imageFile) {
+                showStatus('请先选择要上传的图片', 'error');
+                return;
+            }
+            
+            // 触发表单提交
+            uploadForm.dispatchEvent(new Event('submit'));
+        });
+    }
+    
+    // 监听使用自己的仓库按钮点击事件
+    if (customRepoBtn) {
+        customRepoBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 切换按钮样式
+            customRepoBtn.classList.remove('btn-secondary');
+            customRepoBtn.classList.add('btn-primary');
+            classicRepoBtn.classList.remove('btn-primary');
+            classicRepoBtn.classList.add('btn-secondary');
+            
+            // 显示GitHub配置区域
+            const githubConfig = document.getElementById('github-config');
+            if (githubConfig) {
+                githubConfig.style.display = 'block';
+            }
+            
+            // 清空GitHub配置输入框
+            document.getElementById('github-token').value = '';
+            document.getElementById('github-username').value = '';
+            document.getElementById('github-repo').value = '';
+            document.getElementById('github-branch').value = '';
+        });
+    }
+    
     // 监听表单提交事件
     uploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // 检查是否选择了图片
+        const imageFile = document.getElementById('image-file').files[0];
+        if (!imageFile) {
+            showStatus('请先选择要上传的图片', 'error');
+            return;
+        }
         
         // 获取表单数据
         const githubToken = document.getElementById('github-token').value;
         const githubUsername = document.getElementById('github-username').value;
         const githubRepo = document.getElementById('github-repo').value;
         const githubBranch = document.getElementById('github-branch').value || 'main';
-        const imageFile = document.getElementById('image-file').files[0];
         const uploaderName = document.getElementById('uploader-name').value;
+        
+        // 验证GitHub配置
+        if (!githubToken || !githubUsername || !githubRepo) {
+            showStatus('请填写完整的GitHub配置信息', 'error');
+            return;
+        }
+        
+        // 保存Token到本地存储（加密）
+        saveGithubToken(githubToken);
         
         // 显示上传状态
         uploadButton.disabled = true;

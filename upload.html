@@ -113,32 +113,39 @@
 </head>
 <body>
     <header>
-        <h1>上传图片到GitHub</h1>
+        <h1>Github 仓库存储</h1>
         <p>将图片上传到GitHub仓库并获取预览链接</p>
     </header>
     
     <main>
         <div class="upload-container">
             <form id="upload-form">
-                <div class="form-group">
-                    <label for="github-token">GitHub Personal Access Token</label>
-                    <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" value="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" required>
-                    <small style="color: #666; margin-top: 0.5rem; display: block;">需要创建一个具有repo权限的Personal Access Token</small>
+                <!-- GitHub配置区域（默认隐藏） -->
+                <div class="form-group" id="github-config" style="display: none;">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-color);">GitHub配置</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-token">GitHub Personal Access Token</label>
+                        <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" required>
+                        <small style="color: #666; margin-top: 0.5rem; display: block;">需要创建一个具有repo权限的Personal Access Token</small>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-username">GitHub用户名</label>
+                        <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-repo">GitHub仓库名</label>
+                        <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-branch">GitHub分支</label>
+                        <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）">
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="github-username">GitHub用户名</label>
-                    <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" value="jianyuandanbaiawa" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="github-repo">GitHub仓库名</label>
-                    <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" value="cunchu" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="github-branch">GitHub分支</label>
-                    <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）" value="main">
+                <!-- 仓库选择按钮 -->
+                <div class="form-group" style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem;">
+                    <button type="button" class="btn btn-primary" id="classic-repo-btn" style="flex: 1;">使用经典仓库</button>
+                    <button type="button" class="btn btn-secondary" id="custom-repo-btn" style="flex: 1;">使用自己的仓库</button>
                 </div>
                 
                 <div class="form-group">
@@ -167,7 +174,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2026 GitHub静态网页存储</p>
+        <p>&copy; 2026 GitHub存储</p>
     </footer>
     
     <script src="upload.js"></script>

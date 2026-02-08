@@ -77,8 +77,32 @@
 </head>
 <body>
     <header>
-        <h1>图片分享</h1>
-        <p>查看和分享精彩图片</p>
+        <div class="language-selector">
+            <select id="language-select">
+                <option value="zh-CN">简体中文</option>
+                <option value="en-US">English</option>
+                <option value="ru-RU">Русский</option>
+                <option value="fr-FR">Français</option>
+                <option value="ja-JP">日本語</option>
+                <option value="es-ES">Español</option>
+                <option value="de-DE">Deutsch</option>
+                <option value="it-IT">Italiano</option>
+                <option value="pt-BR">Português (Brasil)</option>
+                <option value="ko-KR">한국어</option>
+                <option value="nl-NL">Nederlands</option>
+                <option value="pl-PL">Polski</option>
+                <option value="tr-TR">Türkçe</option>
+                <option value="ar-SA">العربية</option>
+                <option value="hi-IN">हिन्दी</option>
+                <option value="sv-SE">Svenska</option>
+                <option value="th-TH">ไทย</option>
+                <option value="vi-VN">Tiếng Việt</option>
+                <option value="id-ID">Bahasa Indonesia</option>
+                <option value="cs-CZ">Čeština</option>
+            </select>
+        </div>
+        <h1 id="page-title">Github 仓库存储</h1>
+        <p id="page-subtitle">查看和分享精彩图片</p>
     </header>
     
     <main>
@@ -99,10 +123,14 @@
     </main>
     
     <footer>
-        <p>&copy; 2026 GitHub静态网页存储</p>
+        <p>&copy; 2026 GitHub存储</p>
     </footer>
     
     <script>
+        // 存储当前语言
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'zh-CN';
+        let translations = {};
+        
         // 从URL参数中获取图片信息
         function getUrlParams() {
             const params = {};
@@ -123,9 +151,9 @@
                 
                 // 显示上传者信息
                 if (params.uploader) {
-                    document.getElementById('share-uploader').textContent = `上传者: ${params.uploader}`;
+                    document.getElementById('share-uploader').textContent = `${translations.common?.uploader || '上传者'}: ${params.uploader}`;
                 } else {
-                    document.getElementById('share-uploader').textContent = '上传者: 未知';
+                    document.getElementById('share-uploader').textContent = `${translations.common?.uploader || '上传者'}: ${translations.common?.unknownUploader || '未知'}`;
                 }
                 
                 // 设置下载按钮
@@ -184,8 +212,75 @@
             window.open(twitterUrl, '_blank', 'width=600,height=400');
         }
         
+        // 初始化语言功能
+        function initLanguage() {
+            // 设置语言选择器的当前值
+            const languageSelect = document.getElementById('language-select');
+            if (languageSelect) {
+                languageSelect.value = currentLanguage;
+                // 添加语言选择事件监听器
+                languageSelect.addEventListener('change', function() {
+                    changeLanguage(this.value);
+                });
+            }
+            // 加载并应用当前语言
+            loadLanguage(currentLanguage);
+        }
+        
+        // 切换语言
+        function changeLanguage(language) {
+            currentLanguage = language;
+            localStorage.setItem('selectedLanguage', language);
+            loadLanguage(language);
+        }
+        
+        // 加载语言文件并应用翻译
+        function loadLanguage(language) {
+            const languageFile = `languages/${language}.json`;
+            
+            fetch(languageFile)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('加载语言文件失败');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    translations = data;
+                    applyTranslations(data);
+                    // 重新加载图片信息以更新上传者文本
+                    loadImageInfo();
+                })
+                .catch(error => {
+                    console.error('语言加载错误:', error);
+                });
+        }
+        
+        // 应用翻译到页面元素
+        function applyTranslations(data) {
+            // 更新页面标题
+            if (data.title) {
+                document.title = data.title;
+                const pageTitle = document.getElementById('page-title');
+                if (pageTitle) {
+                    pageTitle.textContent = data.title;
+                }
+            }
+            
+            // 更新页面副标题
+            if (data.share?.subtitle) {
+                const pageSubtitle = document.getElementById('page-subtitle');
+                if (pageSubtitle) {
+                    pageSubtitle.textContent = data.share.subtitle;
+                }
+            }
+        }
+        
         // 页面加载时执行
-        window.onload = loadImageInfo;
+        window.onload = function() {
+            initLanguage();
+            loadImageInfo();
+        }
     </script>
 </body>
 </html>

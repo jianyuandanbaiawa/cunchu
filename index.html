@@ -8,58 +8,82 @@
 </head>
 <body>
     <header>
-        <h1>图片与文字浏览</h1>
-        <p>一个简单的GitHub静态网页存储</p>
+        <div class="language-selector">
+            <select id="language-select">
+                <option value="zh-CN">简体中文</option>
+                <option value="en-US">English</option>
+                <option value="ru-RU">Русский</option>
+                <option value="fr-FR">Français</option>
+                <option value="ja-JP">日本語</option>
+                <option value="es-ES">Español</option>
+                <option value="de-DE">Deutsch</option>
+                <option value="it-IT">Italiano</option>
+                <option value="pt-BR">Português (Brasil)</option>
+                <option value="ko-KR">한국어</option>
+                <option value="nl-NL">Nederlands</option>
+                <option value="pl-PL">Polski</option>
+                <option value="tr-TR">Türkçe</option>
+                <option value="ar-SA">العربية</option>
+                <option value="hi-IN">हिन्दी</option>
+                <option value="sv-SE">Svenska</option>
+                <option value="th-TH">ไทย</option>
+                <option value="vi-VN">Tiếng Việt</option>
+                <option value="id-ID">Bahasa Indonesia</option>
+                <option value="cs-CZ">Čeština</option>
+            </select>
+        </div>
+        <h1 id="page-title">Github 仓库存储</h1>
+        <p id="page-subtitle">一个简单的GitHub静态网页存储</p>
         <div class="search-container">
             <input type="text" id="search-input" class="search-input" placeholder="搜索图片或文本...">
         </div>
-        <nav>
-            <a href="upload.html">上传图片</a>
-            <a href="upload-text.html">上传文本</a>
-            <a href="batch-upload.html">批量上传所有文件</a>
+        <nav id="main-nav">
+            <a href="upload.html" id="nav-uploadImage">上传图片</a>
+            <a href="upload-text.html" id="nav-uploadText">上传文本</a>
+            <a href="batch-upload.html" id="nav-batchUpload">批量上传所有文件</a>
             <a href="login.html" id="login-button">登录</a>
         </nav>
     </header>
     
     <main>
         <section class="gallery">
-            <h2>图片画廊</h2>
+            <h2 id="section-gallery">图片画廊</h2>
             <div class="gallery-container">
                 <!-- 图片将通过JavaScript动态添加 -->
             </div>
         </section>
         
         <section class="texts">
-            <h2>文本内容</h2>
+            <h2 id="section-texts">文本内容</h2>
             <div class="texts-container">
                 <!-- 文本将通过JavaScript动态添加 -->
             </div>
         </section>
         
         <section class="content">
-            <h2>文字内容</h2>
+            <h2 id="section-content">文字内容</h2>
             <div class="content-container">
                 <article>
-                    <h3>欢迎访问</h3>
-                    <p>这是一个简单的GitHub静态网页存储，展示了如何实现基本的图片与文字浏览功能。</p>
+                    <h3 id="article-welcome">欢迎访问</h3>
+                    <p id="article-welcomeText">这是一个简单的GitHub静态网页存储，展示了如何实现基本的图片与文字浏览功能。</p>
                 </article>
                 <article>
-                    <h3>关于本项目</h3>
-                    <p>本项目使用纯HTML、CSS和JavaScript创建，无需任何后端服务，可以直接部署到GitHub Pages上。</p>
+                    <h3 id="article-about">关于本项目</h3>
+                    <p id="article-aboutText">本项目使用纯HTML、CSS和JavaScript创建，无需任何后端服务，可以直接部署到GitHub Pages上。</p>
                 </article>
                 <article>
-                    <h3>功能特点</h3>
-                    <p>- 响应式设计，适配不同屏幕尺寸</p>
-                    <p>- 图片画廊展示</p>
-                    <p>- 文字内容排版</p>
-                    <p>- 简洁美观的界面</p>
+                    <h3 id="article-features">功能特点</h3>
+                    <p id="article-feature1">- 响应式设计，适配不同屏幕尺寸</p>
+                    <p id="article-feature2">- 图片画廊展示</p>
+                    <p id="article-feature3">- 文字内容排版</p>
+                    <p id="article-feature4">- 简洁美观的界面</p>
                 </article>
             </div>
         </section>
     </main>
     
     <footer>
-        <p>&copy; 2026 GitHub静态网页示例</p>
+        <p id="page-footer">&copy; 2026 GitHub存储</p>
     </footer>
     
     <script src="script.js"></script>

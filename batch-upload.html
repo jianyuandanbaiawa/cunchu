@@ -121,7 +121,7 @@
 </head>
 <body>
     <header>
-        <h1>批量上传文件到GitHub</h1>
+        <h1>Github 仓库存储</h1>
         <p>将所有项目文件上传到GitHub仓库</p>
         <nav>
             <a href="index.html" style="color: #fff; text-decoration: none; margin-right: 1rem; padding: 0.5rem 1rem; background-color: rgba(255,255,255,0.2); border-radius: 4px;">返回主页</a>
@@ -131,24 +131,32 @@
     <main>
         <div class="upload-container">
             <form id="batch-upload-form">
-                <div class="form-group">
-                    <label for="github-token">GitHub Personal Access Token</label>
-                    <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" value="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" required>
+                <!-- GitHub配置区域（默认隐藏） -->
+                <div class="form-group" id="github-config" style="display: none;">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-color);">GitHub配置</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-token">GitHub Personal Access Token</label>
+                        <input type="password" id="github-token" name="github-token" placeholder="请输入GitHub Personal Access Token" required>
+                        <small style="color: #666; margin-top: 0.5rem; display: block;">需要创建一个具有repo权限的Personal Access Token</small>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-username">GitHub用户名</label>
+                        <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-repo">GitHub仓库名</label>
+                        <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="github-branch">GitHub分支</label>
+                        <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）">
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="github-username">GitHub用户名</label>
-                    <input type="text" id="github-username" name="github-username" placeholder="请输入GitHub用户名" value="jianyuandanbaiawa" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="github-repo">GitHub仓库名</label>
-                    <input type="text" id="github-repo" name="github-repo" placeholder="请输入GitHub仓库名" value="cunchu" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="github-branch">GitHub分支</label>
-                    <input type="text" id="github-branch" name="github-branch" placeholder="请输入GitHub分支名（默认为main）" value="main">
+                <!-- 仓库选择按钮 -->
+                <div class="form-group" style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem;">
+                    <button type="button" class="btn btn-primary" id="classic-repo-btn" style="flex: 1;">使用经典仓库</button>
+                    <button type="button" class="btn btn-secondary" id="custom-repo-btn" style="flex: 1;">使用自己的仓库</button>
                 </div>
                 
                 <div class="form-group">
@@ -165,13 +173,7 @@
             <div class="file-list">
                 <h3>待上传的文件</h3>
                 <ul id="file-list">
-                    <li>index.html</li>
-                    <li>styles.css</li>
-                    <li>script.js</li>
-                    <li>share.html</li>
-                    <li>upload.html</li>
-                    <li>upload.js</li>
-                    <li>batch-upload.html</li>
+                    <!-- 文件将通过文件选择器添加 -->
                 </ul>
             </div>
             
@@ -180,7 +182,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2026 GitHub静态网页示例</p>
+        <p>&copy; 2026 GitHub存储</p>
     </footer>
     
     <script>
@@ -194,6 +196,9 @@
             
             // 待上传的文件列表
             let filesToUpload = [];
+            
+            // 初始化空文件列表
+            fileList.innerHTML = '';
             
             // 监听文件选择事件
             fileSelector.addEventListener('change', function(e) {
@@ -234,6 +239,103 @@
                 }
             });
             
+            // 从环境变量或本地存储获取Token
+            function getGithubToken() {
+                // 首先尝试从环境变量获取（适用于部署环境）
+                if (typeof process !== 'undefined' && process.env && process.env.GITHUB_TOKEN) {
+                    return process.env.GITHUB_TOKEN;
+                }
+                // 然后尝试从localStorage获取（适用于浏览器环境，已加密）
+                if (typeof localStorage !== 'undefined') {
+                    const encryptedToken = localStorage.getItem('github_token_encrypted');
+                    if (encryptedToken) {
+                        try {
+                            // 简单的解密（实际生产环境应使用更安全的加密方式）
+                            return atob(encryptedToken);
+                        } catch (e) {
+                            console.error('解密Token失败:', e);
+                        }
+                    }
+                }
+                // 最后从表单获取
+                return document.getElementById('github-token').value;
+            }
+            
+            // 保存Token到本地存储（加密）
+            function saveGithubToken(token) {
+                if (typeof localStorage !== 'undefined' && token) {
+                    try {
+                        // 简单的加密（实际生产环境应使用更安全的加密方式）
+                        const encryptedToken = btoa(token);
+                        localStorage.setItem('github_token_encrypted', encryptedToken);
+                    } catch (e) {
+                        console.error('加密Token失败:', e);
+                    }
+                }
+            }
+            
+            // 监听经典仓库按钮点击事件
+            const classicRepoBtn = document.getElementById('classic-repo-btn');
+            const customRepoBtn = document.getElementById('custom-repo-btn');
+            
+            // 确保按钮存在
+            if (classicRepoBtn && customRepoBtn) {
+                // 为经典仓库按钮添加点击事件
+                classicRepoBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // 切换按钮样式
+                    classicRepoBtn.classList.remove('btn-secondary');
+                    classicRepoBtn.classList.add('btn-primary');
+                    customRepoBtn.classList.remove('btn-primary');
+                    customRepoBtn.classList.add('btn-secondary');
+                    
+                    // 隐藏GitHub配置区域
+                    const githubConfig = document.getElementById('github-config');
+                    if (githubConfig) {
+                        githubConfig.style.display = 'none';
+                    }
+                    
+                    // 设置经典仓库配置
+                    document.getElementById('github-token').value = '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';
+                    document.getElementById('github-username').value = 'jianyuandanbaiawa';
+                    document.getElementById('github-repo').value = 'cunchu';
+                    document.getElementById('github-branch').value = 'main';
+                    
+                    // 检查是否选择了文件
+                    if (filesToUpload.length === 0) {
+                        showStatus('请先选择要上传的文件', 'error');
+                        return;
+                    }
+                    
+                    // 触发表单提交
+                    uploadForm.dispatchEvent(new Event('submit'));
+                });
+                
+                // 监听使用自己的仓库按钮点击事件
+                customRepoBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // 切换按钮样式
+                    customRepoBtn.classList.remove('btn-secondary');
+                    customRepoBtn.classList.add('btn-primary');
+                    classicRepoBtn.classList.remove('btn-primary');
+                    classicRepoBtn.classList.add('btn-secondary');
+                    
+                    // 显示GitHub配置区域
+                    const githubConfig = document.getElementById('github-config');
+                    if (githubConfig) {
+                        githubConfig.style.display = 'block';
+                    }
+                    
+                    // 清空GitHub配置输入框
+                    document.getElementById('github-token').value = '';
+                    document.getElementById('github-username').value = '';
+                    document.getElementById('github-repo').value = '';
+                    document.getElementById('github-branch').value = '';
+                });
+            }
+            
             // 监听表单提交事件
             uploadForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -249,6 +351,15 @@
                 const githubUsername = document.getElementById('github-username').value;
                 const githubRepo = document.getElementById('github-repo').value;
                 const githubBranch = document.getElementById('github-branch').value || 'main';
+                
+                // 验证GitHub配置
+                if (!githubToken || !githubUsername || !githubRepo) {
+                    showStatus('请填写完整的GitHub配置信息', 'error');
+                    return;
+                }
+                
+                // 保存Token到本地存储（加密）
+                saveGithubToken(githubToken);
                 
                 // 显示上传状态
                 uploadButton.disabled = true;
