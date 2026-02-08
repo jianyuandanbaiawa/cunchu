@@ -1,0 +1,62 @@
+{
+  "title": "Github repository storage",
+  "subtitle": "Một kho lưu trữ trang web tĩnh GitHub đơn giản",
+  "nav": {
+    "uploadImage": "Tải lên hình ảnh",
+    "uploadText": "Tải lên văn bản",
+    "batchUpload": "Tải lên tất cả các tệp",
+    "login": "Đăng nhập"
+  },
+  "search": "Tìm kiếm hình ảnh hoặc văn bản...",
+  "sections": {
+    "gallery": "Thư viện hình ảnh",
+    "texts": "Nội dung văn bản",
+    "content": "Nội dung văn bản"
+  },
+  "articles": {
+    "welcome": "Chào mừng",
+    "welcomeText": "Đây là một kho lưu trữ trang web tĩnh GitHub đơn giản chỉ ra cách triển khai các chức năng điều hướng cơ bản cho hình ảnh và văn bản.",
+    "about": "Về dự án này",
+    "aboutText": "Dự án này được tạo bằng HTML, CSS và JavaScript thuần túy, không cần bất kỳ dịch vụ backend nào, và có thể được triển khai trực tiếp trên GitHub Pages.",
+    "features": "Tính năng",
+    "feature1": "Thiết kế phản hồi, phù hợp với các kích thước màn hình khác nhau",
+    "feature2": "Thư viện hình ảnh",
+    "feature3": "Bố cục nội dung văn bản",
+    "feature4": "Giao diện sạch và đẹp"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Tải lên hình ảnh lên GitHub",
+    "imageSubtitle": "Tải lên hình ảnh lên kho lưu trữ GitHub của bạn và nhận các liên kết xem trước",
+    "text": "Tải lên văn bản lên GitHub",
+    "textSubtitle": "Hỗ trợ emoji, ký tự đặc biệt và nhiều ngôn ngữ",
+    "batch": "Tải lên tệp lên GitHub",
+    "batchSubtitle": "Tải lên tất cả các tệp dự án lên kho lưu trữ GitHub của bạn"
+  },
+  "share": {
+    "title": "Chia sẻ hình ảnh",
+    "subtitle": "Chia sẻ hình ảnh của bạn với bạn bè",
+    "actions": {
+      "copyLink": "Sao chép liên kết",
+      "shareSocial": "Chia sẻ lên mạng xã hội",
+      "download": "Tải xuống hình ảnh"
+    }
+  },
+  "login": {
+    "title": "Đăng nhập tài khoản GitHub",
+    "subtitle": "Đăng nhập với tài khoản GitHub của bạn để có trải nghiệm thuận tiện hơn",
+    "button": "Đăng nhập với tài khoản GitHub"
+  },
+  "callback": {
+    "processing": "Đang xử lý đăng nhập...",
+    "message": "Đang xử lý yêu cầu đăng nhập của bạn, vui lòng chờ..."
+  },
+  "viewText": {
+    "title": "Xem văn bản",
+    "subtitle": "Xem nội dung văn bản đã tải lên"
+  },
+  "common": {
+    "uploader": "Người tải lên",
+    "unknownUploader": "Không biết"
+  }
+}

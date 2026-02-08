@@ -1,0 +1,62 @@
+{
+  "title": "Armazenamento do repositório GitHub",
+  "subtitle": "Um simples armazenamento de páginas web estáticas do GitHub",
+  "nav": {
+    "uploadImage": "Enviar imagem",
+    "uploadText": "Enviar texto",
+    "batchUpload": "Enviar todos os arquivos",
+    "login": "Entrar"
+  },
+  "search": "Pesquisar imagens ou texto...",
+  "sections": {
+    "gallery": "Galeria de imagens",
+    "texts": "Conteúdos de texto",
+    "content": "Conteúdo de texto"
+  },
+  "articles": {
+    "welcome": "Bem-vindo",
+    "welcomeText": "Este é um simples armazenamento de páginas web estáticas do GitHub que mostra como implementar funcionalidades básicas de navegação para imagens e textos.",
+    "about": "Sobre este projeto",
+    "aboutText": "Este projeto é criado com HTML, CSS e JavaScript puros, sem nenhum serviço backend, e pode ser implantado diretamente no GitHub Pages.",
+    "features": "Recursos",
+    "feature1": "Design responsivo, adaptado a diferentes tamanhos de tela",
+    "feature2": "Galeria de imagens",
+    "feature3": "Layout de conteúdo de texto",
+    "feature4": "Interface limpa e bonita"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Enviar imagem para o GitHub",
+    "imageSubtitle": "Envie imagens para o repositório do GitHub e obtenha links de visualização",
+    "text": "Enviar texto para o GitHub",
+    "textSubtitle": "Suporta emojis, caracteres especiais e múltiplos idiomas",
+    "batch": "Enviar arquivos para o GitHub",
+    "batchSubtitle": "Envie todos os arquivos do projeto para o repositório do GitHub"
+  },
+  "share": {
+    "title": "Compartilhamento de imagens",
+    "subtitle": "Compartilhe suas imagens com amigos",
+    "actions": {
+      "copyLink": "Copiar link",
+      "shareSocial": "Compartilhar nas redes sociais",
+      "download": "Baixar imagem"
+    }
+  },
+  "login": {
+    "title": "Login na conta do GitHub",
+    "subtitle": "Faça login com sua conta do GitHub para uma experiência mais conveniente",
+    "button": "Fazer login com a conta do GitHub"
+  },
+  "callback": {
+    "processing": "Processando login...",
+    "message": "Estou processando sua solicitação de login, por favor aguarde..."
+  },
+  "viewText": {
+    "title": "Visualização de texto",
+    "subtitle": "Visualize o conteúdo de texto enviado"
+  },
+  "common": {
+    "uploader": "Enviador",
+    "unknownUploader": "Desconhecido"
+  }
+}

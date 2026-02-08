@@ -1,0 +1,62 @@
+{
+  "title": "Github Repository Storage",
+  "subtitle": "A simple GitHub static webpage storage",
+  "nav": {
+    "uploadImage": "Upload Image",
+    "uploadText": "Upload Text",
+    "batchUpload": "Batch Upload All Files",
+    "login": "Login"
+  },
+  "search": "Search images or text...",
+  "sections": {
+    "gallery": "Image Gallery",
+    "texts": "Text Content",
+    "content": "Content"
+  },
+  "articles": {
+    "welcome": "Welcome",
+    "welcomeText": "This is a simple GitHub static webpage storage, demonstrating how to implement basic image and text browsing functionality.",
+    "about": "About This Project",
+    "aboutText": "This project is created using pure HTML, CSS, and JavaScript, no backend services required, and can be directly deployed to GitHub Pages.",
+    "features": "Features",
+    "feature1": "Responsive design, adapting to different screen sizes",
+    "feature2": "Image gallery display",
+    "feature3": "Text content layout",
+    "feature4": "Clean and beautiful interface"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Upload Image to GitHub",
+    "imageSubtitle": "Upload images to GitHub repository and get preview links",
+    "text": "Upload Text to GitHub",
+    "textSubtitle": "Supports emoji, kaomoji, and multiple languages",
+    "batch": "Batch Upload Files to GitHub",
+    "batchSubtitle": "Upload all project files to GitHub repository"
+  },
+  "share": {
+    "title": "Image Sharing",
+    "subtitle": "Share your images with friends",
+    "actions": {
+      "copyLink": "Copy Link",
+      "shareSocial": "Share to Social Platforms",
+      "download": "Download Image"
+    }
+  },
+  "login": {
+    "title": "GitHub Account Login",
+    "subtitle": "Log in with your GitHub account for a more convenient experience",
+    "button": "Log in with GitHub Account"
+  },
+  "callback": {
+    "processing": "Processing login...",
+    "message": "Processing your login request, please wait..."
+  },
+  "viewText": {
+    "title": "Text View",
+    "subtitle": "View uploaded text content"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Unknown Uploader"
+  }
+}

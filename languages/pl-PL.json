@@ -1,0 +1,62 @@
+{
+  "title": "Github repository storage",
+  "subtitle": "Prosty magazyn statycznych stron internetowych GitHub",
+  "nav": {
+    "uploadImage": "Prześlij obraz",
+    "uploadText": "Prześlij tekst",
+    "batchUpload": "Prześlij wszystkie pliki",
+    "login": "Zaloguj się"
+  },
+  "search": "Wyszukaj obrazy lub tekst...",
+  "sections": {
+    "gallery": "Galeria obrazów",
+    "texts": "Zawartość tekstowa",
+    "content": "Zawartość tekstowa"
+  },
+  "articles": {
+    "welcome": "Witaj",
+    "welcomeText": "Jest to prosty magazyn statycznych stron internetowych GitHub, który pokazuje, jak zaimplementować podstawowe funkcje nawigacji dla obrazów i tekstów.",
+    "about": "O tym projekcie",
+    "aboutText": "Ten projekt został stworzony przy użyciu czystego HTML, CSS i JavaScript, bez żadnych usług backendowych, i może być bezpośrednio wdrożony na GitHub Pages.",
+    "features": "Cechy",
+    "feature1": "Responsywny design, dostosowany do różnych rozmiarów ekranu",
+    "feature2": "Galeria obrazów",
+    "feature3": "Układ zawartości tekstowej",
+    "feature4": "Czysty i ładny interfejs"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Prześlij obraz do GitHub",
+    "imageSubtitle": "Prześlij obrazy do repozytorium GitHub i uzyskaj linki podglądowe",
+    "text": "Prześlij tekst do GitHub",
+    "textSubtitle": "Obsługuje emoji, znaki specjalne i wiele języków",
+    "batch": "Prześlij pliki do GitHub",
+    "batchSubtitle": "Prześlij wszystkie pliki projektu do repozytorium GitHub"
+  },
+  "share": {
+    "title": "Współdzielenie obrazów",
+    "subtitle": "Podziel się swoimi obrazami z przyjaciółmi",
+    "actions": {
+      "copyLink": "Skopiuj link",
+      "shareSocial": "Udostępnij w mediach społecznościowych",
+      "download": "Pobierz obraz"
+    }
+  },
+  "login": {
+    "title": "Logowanie do konta GitHub",
+    "subtitle": "Zaloguj się przy użyciu konta GitHub dla wygodniejszej experience",
+    "button": "Zaloguj się przy użyciu konta GitHub"
+  },
+  "callback": {
+    "processing": "Przetwarzanie logowania...",
+    "message": "Przetwarzanie twojego żądania logowania, proszę czekać..."
+  },
+  "viewText": {
+    "title": "Wyświetlanie tekstu",
+    "subtitle": "Wyświetl przesłaną zawartość tekstową"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Nieznany"
+  }
+}

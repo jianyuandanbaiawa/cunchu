@@ -1,0 +1,62 @@
+{
+  "title": "Github repository storage",
+  "subtitle": "Penyimpanan halaman web statis GitHub yang sederhana",
+  "nav": {
+    "uploadImage": "Unggah gambar",
+    "uploadText": "Unggah teks",
+    "batchUpload": "Unggah semua file",
+    "login": "Masuk"
+  },
+  "search": "Cari gambar atau teks...",
+  "sections": {
+    "gallery": "Galeri gambar",
+    "texts": "Konten teks",
+    "content": "Konten teks"
+  },
+  "articles": {
+    "welcome": "Selamat datang",
+    "welcomeText": "Ini adalah penyimpanan halaman web statis GitHub yang sederhana yang menunjukkan cara mengimplementasikan fungsi navigasi dasar untuk gambar dan teks.",
+    "about": "Tentang proyek ini",
+    "aboutText": "Proyek ini dibuat dengan HTML, CSS, dan JavaScript murni, tanpa layanan backend apa pun, dan dapat diimplementasikan langsung di GitHub Pages.",
+    "features": "Fitur",
+    "feature1": "Desain responsif, disesuaikan dengan berbagai ukuran layar",
+    "feature2": "Galeri gambar",
+    "feature3": "Tata letak konten teks",
+    "feature4": "Antarmuka yang bersih dan indah"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Unggah gambar ke GitHub",
+    "imageSubtitle": "Unggah gambar ke repositori GitHub Anda dan dapatkan tautan pratinjau",
+    "text": "Unggah teks ke GitHub",
+    "textSubtitle": "Mendukung emoji, karakter khusus, dan banyak bahasa",
+    "batch": "Unggah file ke GitHub",
+    "batchSubtitle": "Unggah semua file proyek ke repositori GitHub Anda"
+  },
+  "share": {
+    "title": "Berbagi gambar",
+    "subtitle": "Bagikan gambar Anda dengan teman",
+    "actions": {
+      "copyLink": "Salin tautan",
+      "shareSocial": "Bagikan di media sosial",
+      "download": "Unduh gambar"
+    }
+  },
+  "login": {
+    "title": "Masuk akun GitHub",
+    "subtitle": "Masuk dengan akun GitHub Anda untuk pengalaman yang lebih nyaman",
+    "button": "Masuk dengan akun GitHub"
+  },
+  "callback": {
+    "processing": "Memproses login...",
+    "message": "Sedang memproses permintaan login Anda, harap tunggu..."
+  },
+  "viewText": {
+    "title": "Tampilkan teks",
+    "subtitle": "Lihat konten teks yang diunggah"
+  },
+  "common": {
+    "uploader": "Pengunggah",
+    "unknownUploader": "Tidak diketahui"
+  }
+}

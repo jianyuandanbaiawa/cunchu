@@ -1,0 +1,62 @@
+{
+  "title": "Github リポジトリストレージ",
+  "subtitle": "シンプルなGitHub静的ウェブページストレージ",
+  "nav": {
+    "uploadImage": "画像のアップロード",
+    "uploadText": "テキストのアップロード",
+    "batchUpload": "すべてのファイルの一括アップロード",
+    "login": "ログイン"
+  },
+  "search": "画像またはテキストを検索...",
+  "sections": {
+    "gallery": "画像ギャラリー",
+    "texts": "テキストコンテンツ",
+    "content": "コンテンツ"
+  },
+  "articles": {
+    "welcome": "ようこそ",
+    "welcomeText": "これはシンプルなGitHub静的ウェブページストレージであり、基本的な画像とテキストの閲覧機能の実装方法を示しています。",
+    "about": "このプロジェクトについて",
+    "aboutText": "このプロジェクトは純粋なHTML、CSS、JavaScriptを使用して作成されており、バックエンドサービスは不要で、GitHub Pagesに直接デプロイすることができます。",
+    "features": "機能",
+    "feature1": "レスポンシブデザイン、さまざまな画面サイズに対応",
+    "feature2": "画像ギャラリー表示",
+    "feature3": "テキストコンテンツレイアウト",
+    "feature4": "クリーンで美しいインターフェース"
+  },
+  "footer": "© 2026 GitHubストレージ",
+  "upload": {
+    "image": "GitHubに画像をアップロード",
+    "imageSubtitle": "画像をGitHubリポジトリにアップロードしてプレビューリンクを取得",
+    "text": "GitHubにテキストをアップロード",
+    "textSubtitle": "絵文字、顔文字、複数言語に対応",
+    "batch": "GitHubにファイルを一括アップロード",
+    "batchSubtitle": "すべてのプロジェクトファイルをGitHubリポジトリにアップロード"
+  },
+  "share": {
+    "title": "画像の共有",
+    "subtitle": "友達と画像を共有",
+    "actions": {
+      "copyLink": "リンクをコピー",
+      "shareSocial": "ソーシャルプラットフォームに共有",
+      "download": "画像をダウンロード"
+    }
+  },
+  "login": {
+    "title": "GitHubアカウントログイン",
+    "subtitle": "より便利な体験のためにGitHubアカウントでログイン",
+    "button": "GitHubアカウントでログイン"
+  },
+  "callback": {
+    "processing": "ログイン処理中...",
+    "message": "ログインリクエストを処理中です、お待ちください..."
+  },
+  "viewText": {
+    "title": "テキスト表示",
+    "subtitle": "アップロードされたテキストコンテンツを表示"
+  },
+  "common": {
+    "uploader": "アップローダー",
+    "unknownUploader": "不明"
+  }
+}

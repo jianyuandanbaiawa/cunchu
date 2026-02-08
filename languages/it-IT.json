@@ -1,0 +1,62 @@
+{
+  "title": "Archiviazione repository GitHub",
+  "subtitle": "Un semplice archivio di pagine web statiche GitHub",
+  "nav": {
+    "uploadImage": "Carica immagine",
+    "uploadText": "Carica testo",
+    "batchUpload": "Carica tutti i file",
+    "login": "Accedi"
+  },
+  "search": "Cerca immagini o testo...",
+  "sections": {
+    "gallery": "Galleria di immagini",
+    "texts": "Contenuti testuali",
+    "content": "Contenuto testuale"
+  },
+  "articles": {
+    "welcome": "Benvenuto/a",
+    "welcomeText": "Questo è un semplice archivio di pagine web statiche GitHub che mostra come implementare funzionalità di base di navigazione per immagini e testi.",
+    "about": "Informazioni su questo progetto",
+    "aboutText": "Questo progetto è creato con HTML, CSS e JavaScript puri, senza alcun servizio backend, e può essere distribuito direttamente su GitHub Pages.",
+    "features": "Caratteristiche",
+    "feature1": "Design responsivo, adattato a diverse dimensioni dello schermo",
+    "feature2": "Galleria di immagini",
+    "feature3": "Layout del contenuto testuale",
+    "feature4": "Interfaccia pulita e bella"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Carica immagine su GitHub",
+    "imageSubtitle": "Carica immagini nel repository GitHub e ottieni link di anteprima",
+    "text": "Carica testo su GitHub",
+    "textSubtitle": "Supporta emoji, caratteri speciali e più lingue",
+    "batch": "Carica file su GitHub",
+    "batchSubtitle": "Carica tutti i file del progetto nel repository GitHub"
+  },
+  "share": {
+    "title": "Condivisione immagini",
+    "subtitle": "Condividi le tue immagini con gli amici",
+    "actions": {
+      "copyLink": "Copia link",
+      "shareSocial": "Condividi sui social",
+      "download": "Scarica immagine"
+    }
+  },
+  "login": {
+    "title": "Accesso all'account GitHub",
+    "subtitle": "Accedi con il tuo account GitHub per un'esperienza più conveniente",
+    "button": "Accedi con l'account GitHub"
+  },
+  "callback": {
+    "processing": "Elaborazione dell'accesso...",
+    "message": "Sto elaborando la tua richiesta di accesso, attendi prego..."
+  },
+  "viewText": {
+    "title": "Visualizzazione testo",
+    "subtitle": "Visualizza il contenuto testuale caricato"
+  },
+  "common": {
+    "uploader": "Caricatore",
+    "unknownUploader": "Sconosciuto"
+  }
+}

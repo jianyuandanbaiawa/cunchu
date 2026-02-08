@@ -1,0 +1,62 @@
+{
+  "title": "Github deposu depolama",
+  "subtitle": "Basit bir GitHub statik web sayfası deposu",
+  "nav": {
+    "uploadImage": "Resim yükle",
+    "uploadText": "Metin yükle",
+    "batchUpload": "Tüm dosyaları toplu yükle",
+    "login": "Giriş yap"
+  },
+  "search": "Resim veya metin ara...",
+  "sections": {
+    "gallery": "Resim galerisi",
+    "texts": "Metin içeriği",
+    "content": "Metin içeriği"
+  },
+  "articles": {
+    "welcome": "Hoş geldiniz",
+    "welcomeText": "Bu, resim ve metinler için temel gezinme işlevlerinin nasıl uygulanacağını gösteren basit bir GitHub statik web sayfası deposudur.",
+    "about": "Bu projeden hakkında",
+    "aboutText": "Bu proje, herhangi bir arka uç hizmeti olmadan saf HTML, CSS ve JavaScript ile oluşturulmuştur ve doğrudan GitHub Pages'a dağıtılabilir.",
+    "features": "Özellikler",
+    "feature1": "Farklı ekran boyutlarına uyarlanmış duyarlı tasarım",
+    "feature2": "Resim galerisi",
+    "feature3": "Metin içeriği düzeni",
+    "feature4": "Temiz ve güzel arayüz"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Resimleri GitHub'a yükle",
+    "imageSubtitle": "Resimleri GitHub deposuna yükleyin ve önizleme bağlantıları alın",
+    "text": "Metni GitHub'a yükle",
+    "textSubtitle": "Emoji, özel karakterler ve çoklu dil destekler",
+    "batch": "Dosyaları GitHub'a yükle",
+    "batchSubtitle": "Tüm proje dosyalarını GitHub deposuna yükleyin"
+  },
+  "share": {
+    "title": "Resim paylaşımı",
+    "subtitle": "Resimlerinizi arkadaşlarla paylaşın",
+    "actions": {
+      "copyLink": "Bağlantıyı kopyala",
+      "shareSocial": "Sosyal medyada paylaşın",
+      "download": "Resmi indirin"
+    }
+  },
+  "login": {
+    "title": "GitHub hesabıyla giriş",
+    "subtitle": "Daha kolay bir deneyim için GitHub hesabınızla giriş yapın",
+    "button": "GitHub hesabıyla giriş yap"
+  },
+  "callback": {
+    "processing": "Giriş işlemi devam ediyor...",
+    "message": "Giriş isteğiniz işleniyor, lütfen bekleyin..."
+  },
+  "viewText": {
+    "title": "Metin görüntüleme",
+    "subtitle": "Yüklenen metin içeriğini görüntüleyin"
+  },
+  "common": {
+    "uploader": "Yükleyen",
+    "unknownUploader": "Bilinmeyen"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "title": "Github Almacenamiento de Repositorios",
+  "subtitle": "Un simple almacenamiento de página web estática de GitHub",
+  "nav": {
+    "uploadImage": "Subir Imagen",
+    "uploadText": "Subir Texto",
+    "batchUpload": "Subida por Lotes de Todos los Archivos",
+    "login": "Iniciar Sesión"
+  },
+  "search": "Buscar imágenes o texto...",
+  "sections": {
+    "gallery": "Galería de Imágenes",
+    "texts": "Contenido de Texto",
+    "content": "Contenido"
+  },
+  "articles": {
+    "welcome": "Bienvenido",
+    "welcomeText": "Este es un simple almacenamiento de página web estática de GitHub, demostrando cómo implementar una funcionalidad básica de navegación para imágenes y texto.",
+    "about": "Sobre este Proyecto",
+    "aboutText": "Este proyecto está creado utilizando HTML, CSS y JavaScript puros, no se requieren servicios backend, y puede ser desplegado directamente en GitHub Pages.",
+    "features": "Características",
+    "feature1": "Diseño responsive, adaptándose a diferentes tamaños de pantalla",
+    "feature2": "Visualización de galería de imágenes",
+    "feature3": "Diseño de contenido de texto",
+    "feature4": "Interfaz limpia y hermosa"
+  },
+  "footer": "© 2026 Almacenamiento GitHub",
+  "upload": {
+    "image": "Subir Imagen a GitHub",
+    "imageSubtitle": "Sube imágenes al repositorio de GitHub y obtén enlaces de vista previa",
+    "text": "Subir Texto a GitHub",
+    "textSubtitle": "Soporta emoji, kaomoji y múltiples idiomas",
+    "batch": "Subida por Lotes de Archivos a GitHub",
+    "batchSubtitle": "Sube todos los archivos del proyecto al repositorio de GitHub"
+  },
+  "share": {
+    "title": "Compartir Imágenes",
+    "subtitle": "Comparte tus imágenes con amigos",
+    "actions": {
+      "copyLink": "Copiar Enlace",
+      "shareSocial": "Compartir en Plataformas Sociales",
+      "download": "Descargar Imagen"
+    }
+  },
+  "login": {
+    "title": "Inicio de Sesión de Cuenta GitHub",
+    "subtitle": "Inicia sesión con tu cuenta de GitHub para una experiencia más conveniente",
+    "button": "Iniciar Sesión con Cuenta GitHub"
+  },
+  "callback": {
+    "processing": "Procesando Inicio de Sesión...",
+    "message": "Procesando tu solicitud de inicio de sesión, por favor espera..."
+  },
+  "viewText": {
+    "title": "Visualización de Texto",
+    "subtitle": "Visualiza el contenido de texto subido"
+  },
+  "common": {
+    "uploader": "Subidor",
+    "unknownUploader": "Desconocido"
+  }
+}

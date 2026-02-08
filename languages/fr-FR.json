@@ -1,0 +1,62 @@
+{
+  "title": "Github Stockage de Dépôts",
+  "subtitle": "Un simple stockage de page web statique GitHub",
+  "nav": {
+    "uploadImage": "Télécharger une Image",
+    "uploadText": "Télécharger un Texte",
+    "batchUpload": "Téléchargement Batch de Tous les Fichiers",
+    "login": "Connexion"
+  },
+  "search": "Rechercher des images ou du texte...",
+  "sections": {
+    "gallery": "Galerie d'Images",
+    "texts": "Contenu Textuel",
+    "content": "Contenu"
+  },
+  "articles": {
+    "welcome": "Bienvenue",
+    "welcomeText": "Il s'agit d'un simple stockage de page web statique GitHub, démontrant comment implémenter une fonctionnalité de navigation basique pour les images et le texte.",
+    "about": "À Propos de ce Projet",
+    "aboutText": "Ce projet est créé à l'aide de HTML, CSS et JavaScript purs, aucun service backend requis, et peut être déployé directement sur GitHub Pages.",
+    "features": "Caractéristiques",
+    "feature1": "Conception responsive, s'adaptant à différentes tailles d'écran",
+    "feature2": "Affichage de galerie d'images",
+    "feature3": "Mise en page du contenu textuel",
+    "feature4": "Interface propre et belle"
+  },
+  "footer": "© 2026 GitHub Stockage",
+  "upload": {
+    "image": "Télécharger une Image sur GitHub",
+    "imageSubtitle": "Téléchargez des images dans le dépôt GitHub et obtenez des liens d'aperçu",
+    "text": "Télécharger un Texte sur GitHub",
+    "textSubtitle": "Prend en charge les emoji, les kaomoji et plusieurs langues",
+    "batch": "Téléchargement Batch de Fichiers sur GitHub",
+    "batchSubtitle": "Téléchargez tous les fichiers du projet dans le dépôt GitHub"
+  },
+  "share": {
+    "title": "Partage d'Images",
+    "subtitle": "Partagez vos images avec vos amis",
+    "actions": {
+      "copyLink": "Copier le Lien",
+      "shareSocial": "Partager sur les Réseaux Sociaux",
+      "download": "Télécharger l'Image"
+    }
+  },
+  "login": {
+    "title": "Connexion au Compte GitHub",
+    "subtitle": "Connectez-vous avec votre compte GitHub pour une expérience plus pratique",
+    "button": "Connectez-vous avec le Compte GitHub"
+  },
+  "callback": {
+    "processing": "Traitement de la Connexion...",
+    "message": "Traitement de votre demande de connexion, veuillez patienter..."
+  },
+  "viewText": {
+    "title": "Visualisation de Texte",
+    "subtitle": "Visualisez le contenu textuel téléchargé"
+  },
+  "common": {
+    "uploader": "Téléchargeur",
+    "unknownUploader": "Inconnu"
+  }
+}

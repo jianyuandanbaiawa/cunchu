@@ -1,0 +1,62 @@
+{
+  "title": "Github Repository-Speicher",
+  "subtitle": "Ein einfacher GitHub-Static-Webpage-Speicher",
+  "nav": {
+    "uploadImage": "Bild Hochladen",
+    "uploadText": "Text Hochladen",
+    "batchUpload": "Batch-Upload aller Dateien",
+    "login": "Anmelden"
+  },
+  "search": "Bilder oder Text suchen...",
+  "sections": {
+    "gallery": "Bildergalerie",
+    "texts": "Textinhalt",
+    "content": "Inhalt"
+  },
+  "articles": {
+    "welcome": "Willkommen",
+    "welcomeText": "Dies ist ein einfacher GitHub-Static-Webpage-Speicher, der zeigt, wie man eine grundlegende Navigationsfunktionalität für Bilder und Text implementiert.",
+    "about": "Über dieses Projekt",
+    "aboutText": "Dieses Projekt wurde mit reinem HTML, CSS und JavaScript erstellt, keine Backend-Dienste erforderlich, und kann direkt auf GitHub Pages deployed werden.",
+    "features": "Funktionen",
+    "feature1": "Responsives Design, angepasst an verschiedene Bildschirmgrößen",
+    "feature2": "Bildergalerie-Anzeige",
+    "feature3": "Textinhalt-Layout",
+    "feature4": "Sauberes und schönes Interface"
+  },
+  "footer": "© 2026 GitHub-Speicher",
+  "upload": {
+    "image": "Bild auf GitHub hochladen",
+    "imageSubtitle": "Laden Sie Bilder in das GitHub-Repository hoch und erhalten Sie Vorschaulinks",
+    "text": "Text auf GitHub hochladen",
+    "textSubtitle": "Unterstützt Emojis, Kaomojis und mehrere Sprachen",
+    "batch": "Batch-Upload von Dateien auf GitHub",
+    "batchSubtitle": "Laden Sie alle Projekt-Dateien in das GitHub-Repository hoch"
+  },
+  "share": {
+    "title": "Bildfreigabe",
+    "subtitle": "Teilen Sie Ihre Bilder mit Freunden",
+    "actions": {
+      "copyLink": "Link kopieren",
+      "shareSocial": "Auf sozialen Plattformen teilen",
+      "download": "Bild herunterladen"
+    }
+  },
+  "login": {
+    "title": "GitHub-Konto-Anmeldung",
+    "subtitle": "Melden Sie sich mit Ihrem GitHub-Konto an für eine bequemere Erfahrung",
+    "button": "Mit GitHub-Konto anmelden"
+  },
+  "callback": {
+    "processing": "Anmeldung wird verarbeitet...",
+    "message": "Ihre Anmeldeanfrage wird verarbeitet, bitte warten..."
+  },
+  "viewText": {
+    "title": "Textanzeige",
+    "subtitle": "Zeigen Sie hochgeladenen Textinhalt an"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Unbekannt"
+  }
+}

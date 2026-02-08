@@ -1,0 +1,62 @@
+{
+  "title": "Github repository storage",
+  "subtitle": "Jednoduché úložiště statických webových stránek GitHub",
+  "nav": {
+    "uploadImage": "Nahrát obrázek",
+    "uploadText": "Nahrát text",
+    "batchUpload": "Nahrát všechny soubory",
+    "login": "Přihlásit se"
+  },
+  "search": "Vyhledat obrázky nebo text...",
+  "sections": {
+    "gallery": "Galerie obrázků",
+    "texts": "Textové obsahy",
+    "content": "Textové obsahy"
+  },
+  "articles": {
+    "welcome": "Vítejte",
+    "welcomeText": "Toto je jednoduché úložiště statických webových stránek GitHub, které ukazuje, jak implementovat základní funkce navigace pro obrázky a texty.",
+    "about": "O tomto projektu",
+    "aboutText": "Tento projekt je vytvořen s čistým HTML, CSS a JavaScriptem, bez jakýchkoli backend služeb, a lze jej nasadit přímo na GitHub Pages.",
+    "features": "Funkce",
+    "feature1": "Responzivní design, přizpůsobený různým velikostem obrazovek",
+    "feature2": "Galerie obrázků",
+    "feature3": "Rozvržení textového obsahu",
+    "feature4": "Čisté a hezké rozhraní"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Nahrát obrázek do GitHub",
+    "imageSubtitle": "Nahrávejte obrázky do vašeho GitHub repozitáře a získávejte náhledové odkazy",
+    "text": "Nahrát text do GitHub",
+    "textSubtitle": "Podporuje emoji, speciální znaky a více jazyků",
+    "batch": "Nahrát soubory do GitHub",
+    "batchSubtitle": "Nahrávejte všechny projektové soubory do vašeho GitHub repozitáře"
+  },
+  "share": {
+    "title": "Sdílení obrázků",
+    "subtitle": "Sdílejte své obrázky s přáteli",
+    "actions": {
+      "copyLink": "Zkopírovat odkaz",
+      "shareSocial": "Sdílet na sociálních sítích",
+      "download": "Stáhnout obrázek"
+    }
+  },
+  "login": {
+    "title": "Přihlášení k účtu GitHub",
+    "subtitle": "Přihlaste se pomocí svého účtu GitHub pro pohodlnější zážitek",
+    "button": "Přihlásit se pomocí účtu GitHub"
+  },
+  "callback": {
+    "processing": "Zpracování přihlášení...",
+    "message": "Zpracovávám vaši žádost o přihlášení, prosím počkejte..."
+  },
+  "viewText": {
+    "title": "Zobrazení textu",
+    "subtitle": "Zobrazit nahraný textový obsah"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Neznámý"
+  }
+}

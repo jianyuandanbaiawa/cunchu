@@ -1,0 +1,62 @@
+{
+  "title": "Github repository lagring",
+  "subtitle": "En enkel GitHub statisk webbsidlager",
+  "nav": {
+    "uploadImage": "Ladda upp bild",
+    "uploadText": "Ladda upp text",
+    "batchUpload": "Ladda upp alla filer",
+    "login": "Logga in"
+  },
+  "search": "Sök bilder eller text...",
+  "sections": {
+    "gallery": "Bildgalleri",
+    "texts": "Textinnehåll",
+    "content": "Textinnehåll"
+  },
+  "articles": {
+    "welcome": "Välkommen",
+    "welcomeText": "Detta är en enkel GitHub statisk webbsidlager som visar hur man implementerar grundläggande navigeringsfunktioner för bilder och texter.",
+    "about": "Om detta projekt",
+    "aboutText": "Detta projekt är skapat med ren HTML, CSS och JavaScript, utan någon backend-tjänst, och kan distribueras direkt på GitHub Pages.",
+    "features": "Funktioner",
+    "feature1": "Responsiv design, anpassad till olika skärmstorlekar",
+    "feature2": "Bildgalleri",
+    "feature3": "Layout för textinnehåll",
+    "feature4": "Ren och vacker gränssnitt"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Ladda upp bild till GitHub",
+    "imageSubtitle": "Ladda upp bilder till din GitHub-repository och få förhandsvisningslänkar",
+    "text": "Ladda upp text till GitHub",
+    "textSubtitle": "Stödjer emoji, specialtecken och flera språk",
+    "batch": "Ladda upp filer till GitHub",
+    "batchSubtitle": "Ladda upp alla projektfiler till din GitHub-repository"
+  },
+  "share": {
+    "title": "Bilddelning",
+    "subtitle": "Dela dina bilder med vänner",
+    "actions": {
+      "copyLink": "Kopiera länk",
+      "shareSocial": "Dela på sociala medier",
+      "download": "Ladda ner bild"
+    }
+  },
+  "login": {
+    "title": "GitHub-kontoinloggning",
+    "subtitle": "Logga in med ditt GitHub-konto för en bekvämare upplevelse",
+    "button": "Logga in med GitHub-konto"
+  },
+  "callback": {
+    "processing": "Bearbetar inloggning...",
+    "message": "Bearbetar din inloggningsbegäran, vänligen vänta..."
+  },
+  "viewText": {
+    "title": "Textvisning",
+    "subtitle": "Visa uppladdat textinnehåll"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Okänd"
+  }
+}

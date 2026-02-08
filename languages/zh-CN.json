@@ -1,0 +1,62 @@
+{
+  "title": "Github 仓库存储",
+  "subtitle": "一个简单的GitHub静态网页存储",
+  "nav": {
+    "uploadImage": "上传图片",
+    "uploadText": "上传文本",
+    "batchUpload": "批量上传所有文件",
+    "login": "登录"
+  },
+  "search": "搜索图片或文本...",
+  "sections": {
+    "gallery": "图片画廊",
+    "texts": "文本内容",
+    "content": "文字内容"
+  },
+  "articles": {
+    "welcome": "欢迎访问",
+    "welcomeText": "这是一个简单的GitHub静态网页存储，展示了如何实现基本的图片与文字浏览功能。",
+    "about": "关于本项目",
+    "aboutText": "本项目使用纯HTML、CSS和JavaScript创建，无需任何后端服务，可以直接部署到GitHub Pages上。",
+    "features": "功能特点",
+    "feature1": "响应式设计，适配不同屏幕尺寸",
+    "feature2": "图片画廊展示",
+    "feature3": "文字内容排版",
+    "feature4": "简洁美观的界面"
+  },
+  "footer": "© 2026 GitHub存储",
+  "upload": {
+    "image": "上传图片到GitHub",
+    "imageSubtitle": "将图片上传到GitHub仓库并获取预览链接",
+    "text": "上传文本到GitHub",
+    "textSubtitle": "支持emoji、颜文字和多种语言",
+    "batch": "批量上传文件到GitHub",
+    "batchSubtitle": "将所有项目文件上传到GitHub仓库"
+  },
+  "share": {
+    "title": "图片分享",
+    "subtitle": "分享您的图片给朋友",
+    "actions": {
+      "copyLink": "复制链接",
+      "shareSocial": "分享到社交平台",
+      "download": "下载图片"
+    }
+  },
+  "login": {
+    "title": "GitHub账号登录",
+    "subtitle": "使用您的GitHub账号登录，享受更便捷的体验",
+    "button": "使用GitHub账号登录"
+  },
+  "callback": {
+    "processing": "登录处理中...",
+    "message": "正在处理您的登录请求，请稍候..."
+  },
+  "viewText": {
+    "title": "文本查看",
+    "subtitle": "查看上传的文本内容"
+  },
+  "common": {
+    "uploader": "上传者",
+    "unknownUploader": "未知上传者"
+  }
+}

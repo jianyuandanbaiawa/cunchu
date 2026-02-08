@@ -1,0 +1,62 @@
+{
+  "title": "Github repository opslag",
+  "subtitle": "Een eenvoudige GitHub statische webpagina opslag",
+  "nav": {
+    "uploadImage": "Afbeelding uploaden",
+    "uploadText": "Tekst uploaden",
+    "batchUpload": "Alle bestanden uploaden",
+    "login": "Inloggen"
+  },
+  "search": "Zoek afbeeldingen of tekst...",
+  "sections": {
+    "gallery": "Afbeeldingsgalerij",
+    "texts": "Tekstinhoud",
+    "content": "Tekstinhoud"
+  },
+  "articles": {
+    "welcome": "Welkom",
+    "welcomeText": "Dit is een eenvoudige GitHub statische webpagina opslag die laat zien hoe u basis navigatiefunctionaliteiten voor afbeeldingen en tekst kunt implementeren.",
+    "about": "Over dit project",
+    "aboutText": "Dit project is gemaakt met pure HTML, CSS en JavaScript, zonder enige backend-service, en kan direct worden geïmplementeerd op GitHub Pages.",
+    "features": "Functies",
+    "feature1": "Responsief ontwerp, aangepast aan verschillende schermformaten",
+    "feature2": "Afbeeldingsgalerij",
+    "feature3": "Layout van tekstinhoud",
+    "feature4": "Schoon en mooi interface"
+  },
+  "footer": "© 2026 GitHub Storage",
+  "upload": {
+    "image": "Upload afbeelding naar GitHub",
+    "imageSubtitle": "Upload afbeeldingen naar uw GitHub-repository en krijg voorbeeldkoppelingen",
+    "text": "Upload tekst naar GitHub",
+    "textSubtitle": "Ondersteunt emoji, speciale tekens en meerdere talen",
+    "batch": "Upload bestanden naar GitHub",
+    "batchSubtitle": "Upload alle projectbestanden naar uw GitHub-repository"
+  },
+  "share": {
+    "title": "Afbeeldingsdeling",
+    "subtitle": "Deel uw afbeeldingen met vrienden",
+    "actions": {
+      "copyLink": "Koppeling kopiëren",
+      "shareSocial": "Delen op sociale media",
+      "download": "Afbeelding downloaden"
+    }
+  },
+  "login": {
+    "title": "GitHub-account inloggen",
+    "subtitle": "Log in met uw GitHub-account voor een handigere ervaring",
+    "button": "Log in met GitHub-account"
+  },
+  "callback": {
+    "processing": "Verwerking van inloggen...",
+    "message": "Uw inlogverzoek wordt verwerkt, even wachten..."
+  },
+  "viewText": {
+    "title": "Tekst weergeven",
+    "subtitle": "Bekijk de geüploade tekstinhoud"
+  },
+  "common": {
+    "uploader": "Uploader",
+    "unknownUploader": "Onbekend"
+  }
+}
