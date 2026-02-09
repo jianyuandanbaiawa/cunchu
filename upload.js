@@ -21,7 +21,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Base64解密工具函数
+    // 多层加密工具函数（至少三层加密）
+    function encryptToken(token) {
+        try {
+            // 第一层：Base64编码
+            let encrypted = btoa(token);
+            // 第二层：字符反转
+            encrypted = encrypted.split('').reverse().join('');
+            // 第三层：再次Base64编码
+            encrypted = btoa(encrypted);
+            return encrypted;
+        } catch (e) {
+            console.error('令牌加密失败:', e);
+            throw e;
+        }
+    }
+    
+    // 多层解密工具函数（对应加密的逆过程）
+    function decryptToken(encryptedToken) {
+        try {
+            // 第一层：Base64解码
+            let decrypted = atob(encryptedToken);
+            // 第二层：字符反转
+            decrypted = decrypted.split('').reverse().join('');
+            // 第三层：Base64解码
+            decrypted = atob(decrypted);
+            return decrypted;
+        } catch (e) {
+            console.error('令牌解密失败:', e);
+            throw e;
+        }
+    }
+    
+    // 兼容旧的Base64解密工具函数
     function base64Decode(encodedString) {
         try {
             return atob(encodedString);
@@ -31,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Base64加密工具函数
+    // 兼容旧的Base64加密工具函数
     function base64Encode(string) {
         try {
             return btoa(string);
@@ -52,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const encryptedToken = localStorage.getItem('github_token_encrypted');
             if (encryptedToken) {
                 try {
-                    // 使用Base64解密工具函数解密
-                    return base64Decode(encryptedToken);
+                    // 使用多层解密工具函数解密
+                    return decryptToken(encryptedToken);
                 } catch (e) {
                     console.error('解密Token失败:', e);
                 }
@@ -67,8 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveGithubToken(token) {
         if (typeof localStorage !== 'undefined' && token) {
             try {
-                // 使用Base64加密工具函数加密
-                const encryptedToken = base64Encode(token);
+                // 使用多层加密工具函数加密
+                const encryptedToken = encryptToken(token);
                 localStorage.setItem('github_token_encrypted', encryptedToken);
             } catch (e) {
                 console.error('加密Token失败:', e);
@@ -102,9 +134,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const savedToken = getGithubToken();
             if (!savedToken) {
                 // 如果没有保存的令牌，使用默认令牌（仅首次使用）
-                const defaultToken = 'Z2hwX1pwenJmY0dpVElRUHRFQnQ2U3VuYWhoaDMzUmY2NjRZdzY2Yw=='; // 加密后的令牌
+                const defaultToken = 'PT1nU3hKRFVIRlRaMmxtU0h4MlNxaFZXUlpHZE4xV09TZGtRc0ptZWhwblcwVUhlamgxWHdoMlo='; // 加密后的令牌
                 try {
-                    const token = base64Decode(defaultToken);
+                    const token = decryptToken(defaultToken);
                     document.getElementById('github-token').value = token;
                     saveGithubToken(token);
                 } catch (e) {
@@ -169,12 +201,45 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // 检查GitHub配置区域是否隐藏
+        const githubConfig = document.getElementById('github-config');
+        const isClassicRepo = githubConfig && githubConfig.style.display === 'none';
+        
         // 获取表单数据
-        const githubToken = document.getElementById('github-token').value;
-        const githubUsername = document.getElementById('github-username').value;
-        const githubRepo = document.getElementById('github-repo').value;
+        let githubToken = document.getElementById('github-token').value;
+        let githubUsername = document.getElementById('github-username').value;
+        let githubRepo = document.getElementById('github-repo').value;
         const githubBranch = document.getElementById('github-branch').value || 'main';
         const uploaderName = document.getElementById('uploader-name').value;
+        
+        // 如果是经典仓库模式，自动填充配置
+        if (isClassicRepo) {
+            // 从localStorage获取保存的令牌
+            const savedToken = getGithubToken();
+            if (!savedToken) {
+                // 如果没有保存的令牌，使用默认令牌（仅首次使用）
+                const defaultToken = 'PT1nU3hKRFVIRlRaMmxtU0h4MlNxaFZXUlpHZE4xV09TZGtRc0ptZWhwblcwVUhlamgxWHdoMlo='; // 加密后的令牌
+                try {
+                    githubToken = decryptToken(defaultToken);
+                    document.getElementById('github-token').value = githubToken;
+                    saveGithubToken(githubToken);
+                } catch (e) {
+                    console.error('解析默认令牌失败:', e);
+                    showStatus('令牌初始化失败，请使用自己的仓库配置', 'error');
+                    return;
+                }
+            } else {
+                githubToken = savedToken;
+                document.getElementById('github-token').value = savedToken;
+            }
+            
+            // 设置经典仓库配置
+            githubUsername = 'jianyuandanbaiawa';
+            githubRepo = 'cunchu';
+            document.getElementById('github-username').value = githubUsername;
+            document.getElementById('github-repo').value = githubRepo;
+            document.getElementById('github-branch').value = 'main';
+        }
         
         // 验证GitHub配置
         if (!githubToken || !githubUsername || !githubRepo) {

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除本地存储 - GitHub静态网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 1rem;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+        .message {
+            margin: 2rem 0;
+            padding: 1rem;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Github 仓库存储</h1>
+        <p>清除本地存储中的旧令牌</p>
+    </header>
+    
+    <main>
+        <div class="container">
+            <h2>清除本地存储</h2>
+            <p>点击下方按钮清除本地存储中的旧令牌，确保系统使用新的默认令牌。</p>
+            
+            <div class="message" id="status-message"></div>
+            
+            <button class="button" onclick="clearStorage()">清除本地存储</button>
+            <button class="button" onclick="checkStorage()">检查存储状态</button>
+            <button class="button" onclick="window.location.href='index.html'">返回主页</button>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 GitHub存储</p>
+    </footer>
+    
+    <script>
+        function clearStorage() {
+            try {
+                // 清除本地存储中的所有GitHub相关数据
+                localStorage.removeItem('github_token_encrypted');
+                localStorage.removeItem('selectedLanguage');
+                localStorage.removeItem('githubLoggedIn');
+                localStorage.removeItem('loginTime');
+                
+                // 显示成功消息
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = '本地存储已成功清除！现在系统会使用新的默认令牌。';
+                statusMessage.style.backgroundColor = '#d4edda';
+                statusMessage.style.color = '#155724';
+                statusMessage.style.border = '1px solid #c3e6cb';
+            } catch (error) {
+                console.error('清除本地存储失败:', error);
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = '清除本地存储失败，请手动清除浏览器缓存。';
+                statusMessage.style.backgroundColor = '#f8d7da';
+                statusMessage.style.color = '#721c24';
+                statusMessage.style.border = '1px solid #f5c6cb';
+            }
+        }
+        
+        function checkStorage() {
+            try {
+                // 检查本地存储状态
+                const githubToken = localStorage.getItem('github_token_encrypted');
+                const selectedLanguage = localStorage.getItem('selectedLanguage');
+                const githubLoggedIn = localStorage.getItem('githubLoggedIn');
+                const loginTime = localStorage.getItem('loginTime');
+                
+                // 显示存储状态
+                const statusMessage = document.getElementById('status-message');
+                let message = '本地存储状态：<br>';
+                message += `GitHub Token: ${githubToken ? '已存在' : '不存在'}<br>`;
+                message += `Selected Language: ${selectedLanguage || '不存在'}<br>`;
+                message += `GitHub Logged In: ${githubLoggedIn || '不存在'}<br>`;
+                message += `Login Time: ${loginTime || '不存在'}`;
+                
+                statusMessage.innerHTML = message;
+                statusMessage.style.backgroundColor = '#d1ecf1';
+                statusMessage.style.color = '#0c5460';
+                statusMessage.style.border = '1px solid #bee5eb';
+            } catch (error) {
+                console.error('检查本地存储失败:', error);
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = '检查本地存储失败，请手动清除浏览器缓存。';
+                statusMessage.style.backgroundColor = '#f8d7da';
+                statusMessage.style.color = '#721c24';
+                statusMessage.style.border = '1px solid #f5c6cb';
+            }
+        }
+        
+        // 页面加载时检查存储状态
+        window.onload = checkStorage;
+    </script>
+</body>
+</html>
