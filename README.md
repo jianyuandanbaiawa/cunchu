@@ -94,10 +94,8 @@ console.log('最终加密结果:', encrypted);
 - 第一层解密 ：对加密后的令牌进行Base64解码
 - 第二层解密 ：将解码后的结果进行字符反转
 - 第三层解密 ：对字符反转后的结果再次进行Base64解码
-- （look me！你完全不需要在意这个，因为在前面的更新中已经加入了内置的base64加密工具，你可以通过使用python -m http.server 8000这条命令，
-在你的浏览器访问http://localhost:8000即可
-encrypt-test.html就是加密工具）
-<img width="791" height="5877" alt="QQ截图20260215231942" src="https://github.com/user-attachments/assets/fb1376bb-59bd-41f4-b7f1-51485c8a37bc" />
+- （look me！你完全不需要在意这个，因为在前面的更新中已经加入了内置的base64加密工具，你只需要自己根据提示，或者丢给ai就可以了）
+
 
 
 
