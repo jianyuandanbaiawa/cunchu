@@ -77,6 +77,12 @@
     </footer>
     
     <script>
+        // GitHub App配置
+        const githubConfig = {
+            client_id: 'Iv23linNWLj63vwC6RNY',
+            client_secret: 'YOUR_ACTUAL_CLIENT_SECRET'
+        };
+        
         // 获取URL中的code参数
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -86,20 +92,62 @@
         const redirectButton = document.getElementById('redirect-button');
         
         if (code) {
-            // 模拟登录成功（实际项目中需要调用后端API交换token）
-            messageElement.innerHTML = '<p class="success-message">登录成功！</p>';
+            // 显示加载状态
+            messageElement.innerHTML = '<p>正在处理登录，请稍候...</p>';
             
-            // 存储登录状态到localStorage
-            localStorage.setItem('githubLoggedIn', 'true');
-            localStorage.setItem('loginTime', new Date().toISOString());
-            
-            // 显示返回按钮
-            redirectButton.style.display = 'inline-block';
-            
-            // 3秒后自动跳转到主页
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 3000);
+            // 第一步：使用code交换access_token
+            fetch('https://github.com/login/oauth/access_token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    client_id: githubConfig.client_id,
+                    client_secret: githubConfig.client_secret,
+                    code: code
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error_description || data.error);
+                }
+                
+                const access_token = data.access_token;
+                
+                // 第二步：使用access_token获取用户信息
+                return fetch('https://api.github.com/user', {
+                    headers: {
+                        'Authorization': `token ${access_token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                })
+                .then(response => response.json())
+                .then(user => {
+                    // 登录成功
+                    messageElement.innerHTML = `<p class="success-message">登录成功！欢迎，${user.login}！</p>`;
+                    
+                    // 存储登录状态和用户信息到localStorage
+                    localStorage.setItem('githubLoggedIn', 'true');
+                    localStorage.setItem('loginTime', new Date().toISOString());
+                    localStorage.setItem('githubUser', JSON.stringify(user));
+                    localStorage.setItem('githubAccessToken', access_token);
+                    
+                    // 显示返回按钮
+                    redirectButton.style.display = 'inline-block';
+                    
+                    // 3秒后自动跳转到主页
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                });
+            })
+            .catch(error => {
+                // 登录失败
+                messageElement.innerHTML = `<p class="error-message">登录失败：${error.message}</p>`;
+                redirectButton.style.display = 'inline-block';
+            });
         } else if (error) {
             // 登录失败
             messageElement.innerHTML = '<p class="error-message">登录失败：' + error + '</p>';

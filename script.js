@@ -206,7 +206,9 @@ function checkLoginStatus() {
         const isLoggedIn = localStorage.getItem('githubLoggedIn') === 'true';
         if (isLoggedIn) {
             // 已登录状态
-            loginButton.textContent = '已登录';
+            const githubUser = JSON.parse(localStorage.getItem('githubUser') || '{}');
+            const username = githubUser.login || '用户';
+            loginButton.textContent = `已登录 (${username})`;
             loginButton.href = '#';
             loginButton.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -226,6 +228,8 @@ function checkLoginStatus() {
 function logout() {
     localStorage.removeItem('githubLoggedIn');
     localStorage.removeItem('loginTime');
+    localStorage.removeItem('githubUser');
+    localStorage.removeItem('githubAccessToken');
     // 刷新页面
     window.location.reload();
 }
